@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/mvc  
+    http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+    http://www.springframework.org/schema/aop 
+    http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+
+	<!-- 扫描控制器类 -->
+	<context:component-scan base-package="com.jf">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+
+	<!-- 扫描静态文件 -->
+	<mvc:resources mapping="*.ico" location="/" />
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+
+	<!-- to generate String HttpResponse to client -->
+	<bean id="stringHttpMessageConverter" class="org.springframework.http.converter.StringHttpMessageConverter">
+		<constructor-arg value="UTF-8" />
+		<property name="supportedMediaTypes">
+			<list>
+				<value>text/plain;charset=UTF-8</value>
+				<value>text/html;charset=UTF-8</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- byte stream converter -->
+	<bean id="byteArrayHttpMessageConverter" class="org.springframework.http.converter.ByteArrayHttpMessageConverter" />
+
+	<!-- to generate JSON responses using fastJson -->
+	<bean id="fastJsonHttpMessageConverter" class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+		<property name="supportedMediaTypes">
+			<list>
+				<value>application/json;charset=UTF-8</value>
+				<value>text/html;charset=UTF-8</value><!-- 避免IE出现下载JSON文件的情况 -->
+			</list>
+		</property>
+		<property name="features">
+			<list>
+				<value>WriteNullListAsEmpty</value> <!-- List字段如果为null,输出为[],而非null -->
+				<value>DisableCircularReferenceDetect</value> <!-- 禁止循环引用检测 -->
+			</list>
+		</property>
+	</bean>
+
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<!--确保session线程安全 -->
+		<property name="synchronizeOnSession" value="true" />
+		<property name="messageConverters">
+			<list>
+				<ref bean="stringHttpMessageConverter" />
+				<ref bean="byteArrayHttpMessageConverter" />
+				<ref bean="fastJsonHttpMessageConverter" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- 采用注解方式配置MVC，该配置信息必须放在 “数据处理器”的下面，或者是包含“数据处理器” -->
+	<mvc:annotation-driven />
+
+	<!-- Default viewResoler handler -->
+	<bean id="viewResolverCommon" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.InternalResourceView" />
+		<property name="prefix" value="/pages/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<!-- Gobale exception setting -->
+	<bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="org.apache.shiro.authz.UnauthorizedException">global/limit</prop>
+				<prop key="java.lang.Exception">global/500</prop>
+				<prop key="java.lang.Throwable">global/500</prop>
+			</props>
+		</property>
+		<property name="statusCodes">
+			<props>
+				<prop key="global/500">500</prop>
+				<prop key="global/404">404</prop>
+			</props>
+		</property>
+		<property name="warnLogCategory" value="WARN" />
+		<property name="defaultErrorView" value="global/500" />
+		<property name="defaultStatusCode" value="500" />
+	</bean>
+
+	<!-- 文件上传配置 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 设置上传文件大小的参数 10M -->
+		<!-- <property name="maxUploadSize" value="0xA00000" /> -->
+		<!-- 设置编码方式 -->
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+	
+</beans>
+	
+	

@@ -1,0 +1,52 @@
+<configuration scan="true" scanPeriod="60 seconds" debug="false"> 
+	<contextName>property</contextName>
+	<property name="LOG_HOME" value="/var/log/kyyc_jsfwx_log" /><!-- log目录 -->
+	<property name="BACKUP_HOME" value="/var/log/kyyc_jsfwx_log" /><!-- log目录 -->
+    <!-- 定义控制台输出 -->
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- 定义过滤器 相比logger内定义优先级高   -->
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>info</level>
+		</filter>
+		<!-- 定义日志格式 -->
+		<layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>
+				%date{yyyy-MM-dd HH:mm:ss} %level [%thread] %10logger[%file:%line] - %msg%n
+			</pattern>
+		</layout>
+	</appender>  
+	<!-- 系统日志 --> 
+	<appender name="SYSTEM_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">  
+        <Encoding>UTF-8</Encoding>  
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">  
+              <FileNamePattern>${BACKUP_HOME}/%d{yyyy-MM-dd}/system.%d{yyyyMMdd}.log.zip</FileNamePattern>  
+              <MaxHistory>30</MaxHistory>   
+        </rollingPolicy>  
+        <layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>
+			%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n   
+            </pattern>
+		</layout> 
+	</appender>  
+ 		
+ 	<!-- 后台业务日志 -->
+ 	<appender name="SERVICE_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">  
+ 		<Encoding>UTF-8</Encoding>  
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">  
+              <FileNamePattern>${BACKUP_HOME}/%d{yyyy-MM-dd}/system.%d{yyyyMMdd}.log.zip</FileNamePattern>  
+              <MaxHistory>30</MaxHistory>   
+        </rollingPolicy>  
+        <layout class="ch.qos.logback.classic.PatternLayout">
+			<pattern>
+			%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n   
+            </pattern>
+		</layout> 
+    </appender>
+    <logger name="SERVICE_LOG" additivity="false" level="info">
+		<appender-ref ref="SERVICE_LOG" />
+	</logger>
+	<root level="info">  
+	    <appender-ref ref="CONSOLE" />  
+	    <appender-ref ref="SYSTEM_LOG" />  
+	</root>  
+ </configuration>  
