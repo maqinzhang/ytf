@@ -1,6 +1,5 @@
 package com.kyyc.core.model;
 
-import java.util.ResourceBundle;
 
 /**
  * 系统常量
@@ -10,12 +9,8 @@ import java.util.ResourceBundle;
  */
 public class Constants {
 
-	private static final ResourceBundle BUNDLE = ResourceBundle.getBundle("constants");
-
-	/**
-	 * 文件服务器地址
-	 */
-	public static final String FILE_SERVER_URL = BUNDLE.getString("fileserver.url");
+	// private static final ResourceBundle BUNDLE =
+	// ResourceBundle.getBundle("constants");
 
 	/**
 	 * 12位时间格式 yyMMDDHHmmss 应用端时间戳使用

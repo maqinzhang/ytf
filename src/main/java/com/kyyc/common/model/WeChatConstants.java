@@ -40,6 +40,11 @@ public class WeChatConstants {
 	public static final String MP_TOKEN = BUNDLE.getString("mp_token");
 	public static final String MP_AES_KEY = BUNDLE.getString("mp_aes_key");
 	
+	/**
+	 * 公众号推送通知，预约成功！
+	 */
+	public static final String MP_ORDER_SUCCCESS_MSG = BUNDLE.getString("mp_order_succcess_msg");
+	
 
 	/**
 	 * 企业号对应的账户ID

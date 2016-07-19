@@ -13,6 +13,7 @@
 <base href="<%=basePath%>">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>工作控制台</title>
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" media="screen" />
 <link rel="stylesheet" href="resources/css/dpl.css">
 <link rel="stylesheet" href="resources/css/plugins.css">
 <link rel="stylesheet" href="resources/css/layout.css">

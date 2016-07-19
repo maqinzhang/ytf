@@ -41,8 +41,8 @@
 					<p>课程教练：${userCourseRecord.course.coach }</p>
 					<p>剩余名额：<font color="red">${userCourseRecord.course.personLimit - userCourseRecord.course.personNum }</font></p>
 					<p>预约情况：<c:choose>
-									<c:when test="${userCourseRecord.isStandby eq '1' }"><font color="blue">预约成功</font></c:when>
-									<c:otherwise><font color="red">候补排队</font></c:otherwise>
+									<c:when test="${userCourseRecord.isStandby eq '1' }"><font color="red">候补排队</font></c:when>
+									<c:otherwise><font color="blue">预约成功</font></c:otherwise>
 								</c:choose>
 					</p>
 				</article>

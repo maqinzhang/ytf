@@ -10,7 +10,8 @@
 <base href="<%=basePath%>">
 <title>首页</title>
 <meta charset="UTF-8">
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" media="screen" />
 <body>
-	<div>首页</div>
+	<div>YTF欢迎你！</div>
 </body>
 </html>
