@@ -8,4 +8,13 @@
 		<result column="IS_STANDBY" property="isStandby" jdbcType="VARCHAR" />
 		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
 	</resultMap>
+	
+	<!-- 判断基础课程预约数量 -->
+	<select id="countBaseCourse" resultType="Integer">
+		SELECT COUNT(*)
+		  FROM user_course_record r, course c
+		 WHERE r.course_id = c.id
+		   and r.user_id = #{userId}
+		   AND c.code = #{code}
+	</select>
 </mapper>

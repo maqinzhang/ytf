@@ -25,12 +25,22 @@ public class UserCourseRecordService extends BaseService<UserCourseRecord> {
 
 	@Resource
 	private UserCourseRecordMapper userCourseRecordMapper;
-	
+
 	@Resource
 	private WeChatMpService weChatMpService;
 
+	/**
+	 * 判断基础课程预约数量
+	 */
+	public int countBaseCourse(String userId, String code) {
+		return userCourseRecordMapper.countBaseCourse(userId, code);
+	}
+
+	/**
+	 * 取消预约记录、将排队的置为预约成功、推送预约成功信息
+	 */
 	public void deleteRecord(int id) {
-		
+
 		UserCourseRecord userCourseRecord = userCourseRecordMapper.selectByPrimaryKey(id);
 
 		/**
@@ -66,7 +76,7 @@ public class UserCourseRecordService extends BaseService<UserCourseRecord> {
 			if (!ObjectUtils.isEmpty(record)) {
 				record.setIsStandby("0");
 				userCourseRecordMapper.updateByPrimaryKey(record);
-				
+
 				/**
 				 * 推送消息，通知预约成功
 				 */

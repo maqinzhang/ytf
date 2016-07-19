@@ -46,7 +46,7 @@ public class UserCourseRecord extends BaseModel {
 	/**
 	 * 创建时间
 	 */
-	@OrderBy
+	@OrderBy("DESC")
 	private Date createTime;
 
 	/**
