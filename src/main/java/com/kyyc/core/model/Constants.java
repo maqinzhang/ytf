@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
 public class Constants {
 
 	private static final ResourceBundle BUNDLE = ResourceBundle.getBundle("constants");
-	
+
 	/**
 	 * 文件服务器地址
 	 */
@@ -86,4 +86,15 @@ public class Constants {
 	 * 5位时间格式 时间部分 HH:mm
 	 */
 	public static final String DATETIME_5 = "HH:mm";
+
+	/**
+	 * 默认分页页码
+	 */
+	public static final String DEFAULT_PAGE_NO = "1";
+
+	/**
+	 * 默认分页页大小
+	 */
+	public static final String DEFAULT_PAGE_SIZE = "10";
+
 }

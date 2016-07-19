@@ -1,22 +1,28 @@
 package com.kyyc.core.interceptor;
 
-import org.apache.ibatis.executor.Executor;
-import org.apache.ibatis.mapping.BoundSql;
-import org.apache.ibatis.mapping.MappedStatement;
-import org.apache.ibatis.mapping.ParameterMapping;
-import org.apache.ibatis.mapping.ParameterMode;
-import org.apache.ibatis.plugin.*;
-import org.apache.ibatis.reflection.MetaObject;
-import org.apache.ibatis.session.Configuration;
-import org.apache.ibatis.session.ResultHandler;
-import org.apache.ibatis.session.RowBounds;
-import org.apache.ibatis.type.TypeHandlerRegistry;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
+
+import org.apache.ibatis.executor.Executor;
+import org.apache.ibatis.mapping.BoundSql;
+import org.apache.ibatis.mapping.MappedStatement;
+import org.apache.ibatis.mapping.ParameterMapping;
+import org.apache.ibatis.mapping.ParameterMode;
+import org.apache.ibatis.plugin.Interceptor;
+import org.apache.ibatis.plugin.Intercepts;
+import org.apache.ibatis.plugin.Invocation;
+import org.apache.ibatis.plugin.Plugin;
+import org.apache.ibatis.plugin.Signature;
+import org.apache.ibatis.reflection.MetaObject;
+import org.apache.ibatis.session.Configuration;
+import org.apache.ibatis.session.ResultHandler;
+import org.apache.ibatis.session.RowBounds;
+import org.apache.ibatis.type.TypeHandlerRegistry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * MyBatis 性能拦截器，用于输出每条 SQL 语句及其执行时间
@@ -27,47 +33,43 @@ import java.util.Properties;
 		@Signature(type = Executor.class, method = "update", args = { MappedStatement.class, Object.class }) })
 public class ExecuteSqlInterceptor implements Interceptor {
 
-	/** 是否启用该拦截器功能，默认是true启用 **/
-	private boolean enable = true;
+	private Logger LOG = LoggerFactory.getLogger(getClass());
 
 	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	@Override
 	public Object intercept(Invocation invocation) throws Throwable {
 
-		long start = 0L;
-		if (enable) {
+		long start = System.currentTimeMillis();
 
-			start = System.currentTimeMillis();
-
-			MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];
-			Object parameterObject = null;
-			if (invocation.getArgs().length > 1) {
-				parameterObject = invocation.getArgs()[1];
-			}
-
-			String statementId = mappedStatement.getId();
-			BoundSql boundSql = mappedStatement.getBoundSql(parameterObject);
-			Configuration configuration = mappedStatement.getConfiguration();
-			String sql = getSql(boundSql, parameterObject, configuration);
-
-			System.out.println();
-			System.out.println("=============================================================");
-			System.out.println("业务开始时间：" + DATE_FORMAT.format(new Date()));
-			System.out.println("执行SqlId：" + statementId);
-			System.out.println("执行的SQL语句：" + sql);
+		MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];
+		Object parameterObject = null;
+		if (invocation.getArgs().length > 1) {
+			parameterObject = invocation.getArgs()[1];
 		}
+
+		String statementId = mappedStatement.getId();
+		BoundSql boundSql = mappedStatement.getBoundSql(parameterObject);
+		Configuration configuration = mappedStatement.getConfiguration();
+		String sql = getSql(boundSql, parameterObject, configuration);
+
+		StringBuffer sb = new StringBuffer("\n\n");
+		sb.append("=============================================================\n");
+		sb.append("业务开始时间：" + DATE_FORMAT.format(new Date()) + "\n");
+		sb.append("执行SqlId：" + statementId + "\n");
+		sb.append("执行的SQL语句：" + sql);
+		
+		LOG.info(sb.toString());
+		sb.setLength(0);
 
 		Object result = invocation.proceed();
 
-		if (enable) {
-			long end = System.currentTimeMillis();
-			long timing = end - start;
+		long end = System.currentTimeMillis();
+		long timing = end - start;
 
-			System.out.println("执行花费时间：" + timing + " ms");
-			System.out.println("=============================================================");
-			System.out.println();
-		}
+		sb.append("\n执行花费时间：" + timing + " ms\n");
+		sb.append("=============================================================");
+		LOG.info(sb.toString());
 		return result;
 	}
 
@@ -124,9 +126,5 @@ public class ExecuteSqlInterceptor implements Interceptor {
 			result = "null";
 		}
 		return sql.replaceFirst("\\?", result);
-	}
-
-	public void setEnable(boolean enable) {
-		this.enable = enable;
 	}
 }

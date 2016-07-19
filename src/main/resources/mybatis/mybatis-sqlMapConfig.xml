@@ -11,17 +11,14 @@
 	</settings>
 	 
 	<plugins>
-	
 		<!--SQL执行拦截器, 上线时可以整体去掉该拦截器, 或者是设置enable参数为false-->
-        <plugin interceptor="com.jf.core.interceptor.ExecuteSqlInterceptor">
-        	<property name="enable" value="true" />
-        </plugin>
+        <plugin interceptor="com.kyyc.core.interceptor.ExecuteSqlInterceptor" />
         
 		<!--分页插件拦截器-->
 		<plugin interceptor="com.github.pagehelper.PageHelper">
 			
 			<!--方言-->
-			<property name="dialect" value="oracle" />
+			<property name="dialect" value="mysql" />
 			<!--
 			该参数默认为false
 			设置为true时，会将RowBounds第一个参数offset当成pageNum页码使用

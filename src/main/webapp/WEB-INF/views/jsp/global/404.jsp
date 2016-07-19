@@ -56,7 +56,7 @@ body {
 <body>
 	<div class="not-found">
 		<p>
-			您可以 <a href="dashboard">返回首页</a>
+			<!-- 您可以 <a href="dashboard">返回首页</a> -->
 		</p>
 	</div>
 </body>
