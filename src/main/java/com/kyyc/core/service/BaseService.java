@@ -152,6 +152,15 @@ public abstract class BaseService<M extends BaseModel> {
 	}
 
 	/**
+	 * 查询全部实体数据
+	 * 
+	 * @return 返回实体集合
+	 */
+	public List<M> selectAll() {
+		return baseMapper.selectAll();
+	}
+
+	/**
 	 * 根据Condition条件进行查询
 	 * 
 	 * @param condition
@@ -168,6 +177,15 @@ public abstract class BaseService<M extends BaseModel> {
 	 */
 	public int count(M m) {
 		return baseMapper.selectCount(m);
+	}
+
+	/**
+	 * 根据实体中的属性查询总数，查询条件使用等号
+	 *
+	 * @return 实体总数
+	 */
+	public int countAll() {
+		return baseMapper.selectCount(null);
 	}
 
 	/**

@@ -1,0 +1,128 @@
+@import url(calendar.css);
+*{padding:0;margin:0;-webkit-tap-highlight-color:transparent;-webkit-appearance:none}
+body{
+	overflow:-moz-scrollbars-vertical;
+	width:100%;font-size:28px;
+	font-family:-apple-system-font,"Helvetica Neue","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+	color:#5a5a5a;background-color:#f1f1f1;word-break:break-all}
+	img,table{border:none
+}
+ul,li,ol{list-style:none}
+a{cursor:pointer;}
+a:link,a:visited,a:hover,a:active{outline:none;text-decoration:none;}
+input,select,button,textarea{outline:none}input,textarea{vertical-align:baseline}
+input[type="text"],input[type="password"],input[type="tel"],
+textarea{box-sizing:border-box;padding:4px 6px;font-size:28px;border:1px solid #999}
+input::-webkit-input-placeholder{font-size:28px}input:-moz-placeholder{font-size:28px}input::-moz-placeholder{font-size:28px}
+input:-ms-input-placeholder{font-size:28px}
+input[type="checkbox"],input[type="radio"]{margin-right:3px}img{vertical-align:middle}
+h6{font-size:28px}
+
+/*!
+ * Datepicker v@VERSION
+ * https://github.com/fengyuanchen/datepicker
+ *
+ * Copyright (c) 2014-@YEAR Fengyuan Chen
+ * Released under the MIT license
+ *
+ * Date: @DATE
+ */
+ .datepicker-container{position:fixed;top:0;left:0;width:750px;font-size:28px;line-height:30px;background-color:#fff;direction:ltr !important;touch-action:none;user-select:none;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none}.datepicker-container:before,.datepicker-container:after{position:absolute;display:block;height:0;width:0;border:5px solid transparent;content:" "}.datepicker-dropdown{position:absolute;z-index:1;border:1px solid #ccc;box-shadow:0 3px 6px #ccc;-webkit-box-sizing:content-box;-moz-box-sizing:content-box;box-sizing:content-box}.datepicker-inline{position:static}.datepicker-top-left,.datepicker-top-right{border-top-color:#39f}.datepicker-top-left:before,.datepicker-top-left:after,.datepicker-top-right:before,.datepicker-top-right:after{top:-5px;left:10px;border-top:0}.datepicker-top-left:before,.datepicker-top-right:before{border-bottom-color:#39f}.datepicker-top-left:after,.datepicker-top-right:after{top:-4px;border-bottom-color:#fff}.datepicker-bottom-left,.datepicker-bottom-right{border-bottom-color:#39f}.datepicker-bottom-left:before,.datepicker-bottom-left:after,.datepicker-bottom-right:before,.datepicker-bottom-right:after{bottom:-5px;left:10px;border-bottom:0}.datepicker-bottom-left:before,.datepicker-bottom-right:before{border-top-color:#39f}.datepicker-bottom-left:after,.datepicker-bottom-right:after{bottom:-4px;border-top-color:#fff}.datepicker-top-right:before,.datepicker-top-right:after,.datepicker-bottom-right:before,.datepicker-bottom-right:after{left:auto;right:10px}.datepicker-panel>ul:before,.datepicker-panel>ul:after{display:table;content:" "}.datepicker-panel>ul:after{clear:both}.datepicker-panel>ul{width:100%;margin:0;padding:0}.datepicker-panel>ul>li{float:left;box-sizing:border-box;width:94px;height:94px;margin:0;padding:0;line-height:94px;text-align:center;background-color:#fff;list-style:none;cursor:pointer}.datepicker-panel>ul>li.muted,.datepicker-panel>ul>li.muted:hover{color:#999}.datepicker-panel>ul>li.picked,.datepicker-panel>ul>li.picked:hover{border:2px solid #367cf5}.datepicker-panel>ul>li.disabled,.datepicker-panel>ul>li.disabled:hover{color:#ccc;background-color:#fff;cursor:default}.datepicker-panel>ul>li[data-view="years prev"],.datepicker-panel>ul>li[data-view="year prev"],.datepicker-panel>ul>li[data-view="month prev"],.datepicker-panel>ul>li[data-view="years next"],.datepicker-panel>ul>li[data-view="year next"],.datepicker-panel>ul>li[data-view="month next"],.datepicker-panel>ul>li[data-view="next"]{width:120px}.datepicker-panel>ul>li[data-view="years current"],.datepicker-panel>ul>li[data-view="year current"],.datepicker-panel>ul>li[data-view="month current"]{width:510px}.datepicker-panel>ul[data-view="years"]>li,.datepicker-panel>ul[data-view="months"]>li{width:25%;height:232.66667px;line-height:232.66667px}.datepicker-panel>ul[data-view="week"],.datepicker-panel>ul[data-view="days"]{box-sizing:border-box;padding:0 46px 20px}.datepicker-panel>ul[data-view="week"]>li,.datepicker-panel>ul[data-view="week"]>li:hover,.datepicker-panel>ul[data-view="days"]>li,.datepicker-panel>ul[data-view="days"]>li:hover{background-color:#fff;cursor:default}.datepicker-panel>ul[data-view="week"]{border-top:3px solid #f1f1f1}.datepicker-panel>ul[data-view="week"]>li{height:87px;line-height:87px;color:#367cf5}.datepicker-hide{display:none}.show-days{color:#367cf5 !important}
+ 
+.empty_list{padding:314px 0}
+.empty_list div{height:300px}
+.empty_list div.empty_course{background:url("../img/empty_course.png") no-repeat center}
+.empty_list div.empty_group{background:url("../img/empty_group.png") no-repeat center}
+.empty_list div.empty_reserve{background:url("../img/empty_reserve.png") no-repeat center}
+.empty_list p{margin-top:100px;font-size:34px;text-align:center;color:#c4c4c4}
+ 
+body{width:100%}
+body>.hotbody{position:absolute;top:0;left:50%;margin-left:-375px;width:750px}
+.reserve_group_2>nav{position:fixed;top:0;left:0;width:750px;height:104px;display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:box;display:flex;-webkit-box-orient:horizontal;-moz-box-orient:horizontal;-ms-flex-direction:row;-webkit-flex-direction:row;box-orient:horizontal;flex-flow:row;-webkit-box-align:center;-moz-box-align:center;-ms-flex-align:center;-webkit-align-items:center;box-align:center;align-items:center;background-color:#FFF;z-index:42}
+.reserve_group_2>nav::after{border-top:1px solid #e6e6e6;width:100%;left:0;content:' ';display:block;position:absolute}
+.reserve_group_2>nav::before{top:0}
+.reserve_group_2>nav::after{bottom:0}
+.reserve_group_2>nav aside{position:relative;width:128px;height:100px;text-align:center;background:url("../img/date.png") no-repeat center;background-size:30px 32px}
+.reserve_group_2>nav aside em{display:block;position:absolute;top:50%;left:0;width:2px;height:60px;margin-top:-30px;background:#333}
+.reserve_group_2>nav h3{position:relative;width:207.33333px;height:100px;font-size:28px;font-weight:400;line-height:100px;text-align:center}
+.reserve_group_2>nav h3.on{color:#296ce0}
+.reserve_group_2>nav h3.on em{display:block}
+.reserve_group_2>nav h3 em{display:none;position:absolute;bottom:0;left:50%;margin-left:-75px;width:150px;height:6px;background:#296ce0}
+.reserve_group_2 .list{margin-top:114px}
+.reserve_group_2 .list article{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:box;display:flex;-webkit-box-orient:horizontal;-moz-box-orient:horizontal;-ms-flex-direction:row;-webkit-flex-direction:row;box-orient:horizontal;flex-flow:row;position:relative;margin-bottom:10px;height:180px;background:#FFF}
+.reserve_group_2 .list article>header{padding:40px 0 0;width:110px;text-align:center}
+.reserve_group_2 .list article>header h2{font-size:32px;font-family:DINAlternate-Bold}
+.reserve_group_2 .list article>header h3{font-size:28px;font-family:DINAlternate-Bold}
+.reserve_group_2 .list article>header em{display:block;margin:26px auto;width:2px;height:50px;background:#999}
+.reserve_group_2 .list article section{-webkit-box-flex:2;-moz-box-flex:2;-ms-flex:2;-webkit-flex:2;box-flex:2;flex:2;box-sizing:border-box;padding:40px 20px 20px}
+.reserve_group_2 .list article section h2{font-size:30px;color:#333}
+.reserve_group_2 .list article section h3{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:box;display:flex;-webkit-box-orient:horizontal;-moz-box-orient:horizontal;-ms-flex-direction:row;-webkit-flex-direction:row;box-orient:horizontal;flex-flow:row;margin-top:36px;color:#333}
+.reserve_group_2 .list article section h3 strong{display:block;width:145px;height:40px;font-size:28px;font-weight:400;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}
+.reserve_group_2 .list article section h3 span{-webkit-box-flex:2;-moz-box-flex:2;-ms-flex:2;-webkit-flex:2;box-flex:2;flex:2;font-size:30px;font-weight:400;text-align:right;color:#999}
+.reserve_group_2 .list article section h4{margin-top:14px;font-size:22px;font-weight:400;color:#999}
+.reserve_group_2 .list article section h5{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:box;display:flex;-webkit-box-orient:horizontal;-moz-box-orient:horizontal;-ms-flex-direction:row;-webkit-flex-direction:row;box-orient:horizontal;flex-flow:row;margin-top:14px;font-size:28px;font-weight:400}
+.reserve_group_2 .list article section h5 span{display:block;-webkit-box-flex:2;-moz-box-flex:2;-ms-flex:2;-webkit-flex:2;box-flex:2;flex:2;box-sizing:border-box;padding-right:10px;width:180px;height:40px;white-space:nowrap;text-overflow:ellipsis;overflow:hidden}
+.reserve_group_2 .list article section h5 strong{font-weight:400;text-align:right}
+.reserve_group_2 .list article section h5 strong em{font-style:normal;color:#296ce0}
+.reserve_group_2 .list article aside{width:180px;background:#e4e4e4 url("../img/no_pic_1.png") no-repeat center;background-size:cover}
+.reserve_group_2 .list article div{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:box;display:flex;-webkit-box-orient:horizontal;-moz-box-orient:horizontal;-ms-flex-direction:row;-webkit-flex-direction:row;box-orient:horizontal;flex-flow:row;position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.75)}
+.reserve_group_2 .list article div h6{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:box;display:flex;-webkit-box-orient:horizontal;-moz-box-orient:horizontal;-ms-flex-direction:row;-webkit-flex-direction:row;box-orient:horizontal;flex-flow:row;-webkit-box-align:center;-moz-box-align:center;-ms-flex-align:center;-webkit-align-items:center;box-align:center;align-items:center;-webkit-box-pack:center;-moz-box-pack:center;-ms-flex-pack:center;-webkit-justify-content:center;box-pack:center;justify-content:center;position:absolute;right:0;width:100%;height:240px;font-weight:400}
+.reserve_group_2 .list article div h6 span{font-size:34px;color:#999}
+.reserve_group_2 .list article div h6 p{font-size:34px;color:#FFF;text-align:center}
+.reserve_group_2 .datepicker_container{width:750px;position:fixed;top:101px;left:0;z-index:42;box-shadow:0 0 8px 0 rgba(0,0,0,0.2)}
+
+.arena_info>.main .busi_info{overflow:auto}
+.arena_info>.main .busi_info li{float:left;margin-right:20px;width:84px}
+.arena_info>.main .busi_info li div{width:84px;height:84px;background-size:cover}
+.arena_info>.main .busi_info li div.wifi{background-image:url("../img/wifi.png")}
+.arena_info>.main .busi_info li div.water{background-image:url("../img/water.png")}
+.arena_info>.main .busi_info li div.parking{background-image:url("../img/p.png")}
+.arena_info>.main .busi_info li div.bath{background-image:url("../img/bath.png")}
+.arena_info>.main .busi_info li div.sauna{background-image:url("../img/group-5.png")}
+
+.glo_module{margin-top:10px;background-color:#FFF}
+.glo_info_model{position:relative;box-sizing:border-box;padding:26px 45px 26px 36px;background-color:#FFF}
+.glo_info_model:not(:last-child)::after{border-top:1px solid #e6e6e6;width:100%;left:0;content:' ';display:block;position:absolute}
+.glo_info_model:not(:last-child)::before{top:0}.glo_info_model:not(:last-child)::after{bottom:0}
+.glo_info_model>header{padding-bottom:15px}.glo_info_model>header h3{color:#333;font-size:28px;font-weight:700}
+.glo_info_model>header h4{color:#5a5a5a;font-weight:700}.glo_info_model p{line-height:1.5}
+.glo_info_model .callout{font-size:20px;color:#999}
+.glo_info_model .arrow_right{display:inline-block;width:16px;height:16px;border-top:2px solid #999;border-right:2px solid #999;-o-transform-origin:75% 15%;-moz-transform-origin:75% 15%;-ms-transform-origin:75% 15%;-webkit-transform-origin:75% 15%;transform-origin:75% 15%;-o-transform:rotateZ(45deg);-moz-transform:rotateZ(45deg);-ms-transform:rotateZ(45deg);-webkit-transform:rotateZ(45deg);transform:rotateZ(45deg)}
+
+
+.arena_info>.main .busi_info li div.air{background-image:url("../img/group-6.png")}
+.arena_info>.main .busi_info li p{margin-top:15px;font-size:20px;text-align:center}
+.arena_info>.main .shop_gym{position:relative}
+.arena_info>.main .shop_gym h1::after{border-top:1px solid #e6e6e6;width:100%;left:0;content:' ';display:block;position:absolute}
+.arena_info>.main .shop_gym h1::before{top:0}.arena_info>.main .shop_gym h1::after{bottom:0}
+.arena_info>.main .callout2{font-size:24px;color:#999}
+
+/** button样式 **/
+.btn-blue {
+    background-color: #79c3f2;
+    color: #fff;
+}
+
+.btn-gray {
+    background-color: #888888;
+    color: #fff;
+}
+
+.btn-red {
+    background-color: #ed5564;
+    color: #fff;
+}
+
+.btn-big {
+    width: 100%;
+    text-align: center;
+    line-height: 70px;
+    height: 70px;
+    margin: 10px 0 10px;
+    border-radius: 3px;
+    font-size: 30px;
+    letter-spacing: .01rem;
+    display: block;
+}
+
+/*# sourceMappingURL=style.css.map */

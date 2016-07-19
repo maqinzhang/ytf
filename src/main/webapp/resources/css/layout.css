@@ -1,0 +1,92 @@
+body{ /*height: 100%;*/ background: #fafafa; font-family: "helvetica neue",arial,sans-serif; }
+.contentmain { margin-left: 150px;}
+input[type="checkbox"] {
+    border-color: #ccc;
+    margin: 0 4px 0 0;
+    vertical-align: -2px;
+}
+input[type="radio"] {
+    border-color: #ccc;
+    margin: 0 4px 0 0;
+    vertical-align: -1px;
+}
+img{-moz-force-broken-image-icon:1;}
+.mb10{margin-bottom: 10px;}
+.mt15{margin-top: 15px;}
+.ml15{margin-left: 15px;}
+.mb0{margin-bottom: 0;}
+.mt5{margin-top: 5px; }
+.mb20{margin-bottom: 20px;}
+.mb10{margin-bottom: 10px;}
+.hide{display: none}
+.show{display: block;}
+.wrap{ width: 100%; height: 100%;}
+.wy-header{ height: 51px; position: relative; z-index: 9990;}
+.wy-header .w{ height: 50px; width: 100%; background: #00AF88 ; position: relative; z-index: 9991;}
+.left_top{ background:#00af88; width:170px; height:50px;}
+.logo{ padding: 7px 0 0 6px; position: absolute; left: 0; top: 0;}
+/*当前位置*/
+.adress{ margin-top:12px; margin-left:20px; color:#fff; position:relative;}
+.wy-user-switch{ display: inline-block; height:35px; cursor: pointer; padding-left:20px;}
+.wy-user-switch ul { position: absolute; background: #FFF; border:1px solid #ddd; padding: 0 10px 10px; top: 35px;  border-top: 1px solid #fff; z-index: 2211; right:0; color: #333; width:244px; line-height: 26px; cursor: default; display:none;}
+.wy-user-switch:hover ul { display: block;}
+.wy-user-switch ul li{ padding-top: 5px;}
+/*个人信息*/
+.wy-user {position: absolute; top: 10px; right: 0;}
+.wy-user-img { position: relative; z-index: 2; height: 50px; padding: 0 10px;}
+.wy-user-img p{ text-align: right; height: 20px; display: block; margin: 0; }
+.wy-user-img span,.wy-user-img a{ padding-right:15px;  color: #fff; border-right: 1px solid #fff; }
+.wy-user-img a .wy-user-messages{
+    height: 15px;
+    vertical-align: middle;
+    margin-left: 5px;
+    text-align: center;
+    color: #FFF;
+    line-height: 15px;
+    overflow: hidden;
+    background: #D03A24;
+    border-radius: 10px;
+    padding: 0px 5px;
+    font-weight: normal;
+    display: inline-block;
+    margin-top: -3px;
+    border-right: none;
+}
+.wy-user-img a:hover{  color: #fff;}
+.wy-user-img span.text-primary{ color: #1f92cc;}
+.wy-user-img i{ font-size: 16px;  padding-right: 2px;  padding-left: 15px; color: #fff; }
+.wy-user-img a.border-none{ border:none;}
+/*信息*/
+.message_list  li{ line-height: 40px; border-bottom: 1px solid #eee; cursor: pointer; margin-left: 15px; margin-right: 15px;}
+.message_list  li a{color: #333;}
+.message_list  li a:hover{color:#00B5F3;text-decoration: none;  }
+.message_list .new_message{ background: #d03a24; padding: 0px 2px 1px 2px; color: #fff; font-size: 10px;}
+
+/*侧栏*/
+.wy-sidebar{ width: 170px; position: absolute;left: 0;top: 51px; z-index: 880;}
+.wy-sidebar-bg{ position: fixed;width: 170px;background: #2a3542;height: 100%;top: 0;left: 0; z-index: 0;}
+.wy-menu a{ color: #90969e; width: 100%; display: block; text-decoration: none; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;}
+.wy-menu a:hover{ color: #00af88;  text-decoration: none;}
+.wy-menu .active{ background:#242e39;}
+.wy-menu .active dt a{ color:#fff;}
+.wy-menu dl{ margin-left: 0; padding: 0;  margin-top: -1px;}
+.wy-menu dt{ height: 34px;  line-height: 34px; position: relative; font-weight: normal; }
+.wy-menu dt em{ position: absolute; top: 8px; right: 0px;  font-style: normal;}
+.wy-menu dd{ margin-top: -1px; display: block; margin-left: 5px;}
+.wy-menu dd a{ height: 32px; line-height: 32px; text-indent: 35px; }
+.wy-menu .on,.wy-menu a.on{color: #00af88;}
+.wy-menu .on a{ color: #fff;}
+.wy-menu .on a:hover,.wy-menu a.on:hover{color:#00af88;}
+
+.icon_menu {margin-right: 12px;margin-top: -4px; margin-left: 5px; display: inline-block;width: 22px;height: 20px;vertical-align: middle;background: url(../images/icon-new.png) 0 0 no-repeat;}
+.icon_menu.home {background-position: 0 0;}
+.icon_menu.resource_ico{background-position: -87px 0;}
+.icon_menu.job_ico{background-position: -22px 0;}
+.icon_menu.service_ico{background-position: -44px 0;}
+.icon_menu.info_ico{background-position: -110px 0;}
+.icon_menu.account_ico{background-position: -66px 0;}
+.icon_menu.system_ico{background-position: -134px 0;}
+.icon_menu.arrow_ico{background-position: -154px 0;}
+.icon_menu.arrow_ico_gary{background-position: -170px 0; width:11px;}
+.icon_menu.weixin_ico{background-position: -186px 0; }
+

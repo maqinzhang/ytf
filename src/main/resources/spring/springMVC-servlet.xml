@@ -3,16 +3,16 @@
 	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="
 	http://www.springframework.org/schema/beans
-	http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/context 
-	http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/context/spring-context.xsd
 	http://www.springframework.org/schema/mvc  
-    http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+    http://www.springframework.org/schema/mvc/spring-mvc.xsd
     http://www.springframework.org/schema/aop 
-    http://www.springframework.org/schema/aop/spring-aop-4.0.xsd">
+    http://www.springframework.org/schema/aop/spring-aop.xsd">
 
 	<!-- 扫描控制器类 -->
-	<context:component-scan base-package="com.jf">
+	<context:component-scan base-package="com.kyyc">
 		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
 
@@ -68,7 +68,7 @@
 	<!-- Default viewResoler handler -->
 	<bean id="viewResolverCommon" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass" value="org.springframework.web.servlet.view.InternalResourceView" />
-		<property name="prefix" value="/pages/" />
+		<property name="prefix" value="/WEB-INF/views/jsp/" />
 		<property name="suffix" value=".jsp" />
 	</bean>
 
@@ -76,7 +76,6 @@
 	<bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 		<property name="exceptionMappings">
 			<props>
-				<prop key="org.apache.shiro.authz.UnauthorizedException">global/limit</prop>
 				<prop key="java.lang.Exception">global/500</prop>
 				<prop key="java.lang.Throwable">global/500</prop>
 			</props>
