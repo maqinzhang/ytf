@@ -46,7 +46,7 @@
 					<header>
 						<h3>课程介绍</h3>
 					</header>
-					<p>${course.content }</p>
+					<p id="content">${course.content }</p>
 				</article>
 				<input type="hidden" id="id" value="${course.id }">
 			</div>
@@ -70,6 +70,10 @@
 		$("#backBtn").tap(function(){
 			history.go(-1);
 		});
+		
+		/**替换textarea换行**/
+		var reg = new RegExp("\n", "gi");  
+		$("#content").html($("#content").html().replace(reg,"<br/>"));
 	</script>
 </body>
 </html>

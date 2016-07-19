@@ -1,5 +1,7 @@
 package com.kyyc.common.dao;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.kyyc.common.model.UserCourseRecord;
 import com.kyyc.core.dao.BaseMapper;
 
@@ -10,4 +12,8 @@ import com.kyyc.core.dao.BaseMapper;
  */
 public interface UserCourseRecordMapper extends BaseMapper<UserCourseRecord> {
 
+	/**
+	 * 判断基础课程预约数量
+	 */
+	public int countBaseCourse(@Param("userId") String userId, @Param("code") String code);
 }

@@ -1,6 +1,7 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <input type="hidden" id="rs" value="${param.rs }" />
 <input type="hidden" id="prs" value="${param.prs }" />
@@ -8,7 +9,6 @@
 <input type="hidden" id="pageSize" value="${param.pageSize }" />
 <input type="hidden" id="beginDate" value="${param.beginDate }" />
 <input type="hidden" id="endDate" value="${param.endDate }" />
-
 
 <form name="submitForm" id="submitForm" method="post">
 
@@ -76,9 +76,7 @@
 			</div>
 			<div class="row mt10">
 				<label class="control-label">课程描述：</label>
-				<div class="controls">
-					${course.content }
-				</div>
+				<div class="controls" id="content">${course.content }</div>
 			</div>
 		</div>
 	</div>
@@ -110,8 +108,8 @@
 											<td>${record.userInfo.nickName }</td>
 											<td>
 												<c:choose>
-													<c:when test="${record.isStandby eq '1' }"><font color="blue">预约成功</font></c:when>
-													<c:otherwise><font color="red">候补排队</font></c:otherwise>
+													<c:when test="${record.isStandby eq '1' }"><font color="red">候补排队</font></c:when>
+													<c:otherwise><font color="blue">预约成功</font></c:otherwise>
 												</c:choose>
 											</td>
 											<td><fmt:formatDate value="${record.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
@@ -138,3 +136,8 @@
 	</div>
 </form>
 <script src="resources/js/src/web/course/course.js" type="text/javascript"></script>
+<script type="text/javascript">
+	/**替换textarea换行**/
+	var reg = new RegExp("\n", "gi");  
+	$("#content").html($("#content").html().replace(reg,"<br/>"));
+</script>

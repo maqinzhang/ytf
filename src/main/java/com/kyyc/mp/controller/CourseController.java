@@ -161,6 +161,7 @@ public class CourseController {
 			UserCourseRecord record = new UserCourseRecord();
 			record.setCourseId(id);
 			int count = userCourseRecordService.count(record);
+			
 			/**
 			 * 判断当前预约是否已经满额，如果满额，则为候补人员等待
 			 */
@@ -173,23 +174,34 @@ public class CourseController {
 				record.setIsStandby("0");
 			}
 
-			record.setUserId(openId);
-			int recordCount = userCourseRecordService.count(record);
+			/**
+			 * 是否预约过
+			 */
+			UserCourseRecord _record = new UserCourseRecord();
+			_record.setUserId(openId);
 
+			int recordCount = -1;
 			/**
 			 * 判断是否预约过；规则：基础课一人只能预约一次
 			 */
 			if ("1".equals(course.getIsBase())) {
-				if (recordCount > 0) {
-					model.addAttribute("success", false);
-					model.addAttribute("msg", "该课程您已经预约过，请选择其他课程！");
-					return VIEW_TO_RESULT;
-				}
+				
+				recordCount = userCourseRecordService.countBaseCourse(openId, course.getCode());
+			} else {
+				_record.setCourseId(id);
+				recordCount = userCourseRecordService.count(_record);
+			}
+			
+			if (recordCount > 0) {
+				model.addAttribute("success", false);
+				model.addAttribute("msg", "该课程您已经预约过，请选择其他课程！");
+				return VIEW_TO_RESULT;
 			}
 
 			/**
 			 * 保存预约记录
 			 */
+			record.setUserId(openId);
 			record.setCreateTime(DateTime.now().toDate());
 			userCourseRecordService.save(record);
 

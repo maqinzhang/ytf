@@ -86,8 +86,10 @@
 	
 		$('[data-toggle="datepicker"]').datepicker({
 			language : 'zh-CN',
-			autohide : true
+			autohide : true,
+			startDate: new Date()
 		});
+		
 		$('[data-toggle="datepicker"]').on('pick.datepicker', function(e) {
 			var courseDate = e.date.format("yyyy-MM-dd");
 			location.href = "course/list?courseDate=" + courseDate;
