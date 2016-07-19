@@ -43,9 +43,9 @@
 								<c:when test="${course.personNum gt course.personLimit }">
 									<font color="red">${course.personLimit }人预约、${course.personNum - course.personLimit }人排队</font>
 								</c:when>
-								<c:otherwise><font color="red">${course.personNum }人预约</font> </c:otherwise>
+								<c:otherwise><font color="blue">${course.personNum }人预约</font> </c:otherwise>
 							</c:choose>
-							/ <font color="blue">限制${course.personLimit }人</font>
+							/ <font color="red">限制${course.personLimit }人</font>
 						</td>
 						<td>
 							<a href="javascript:editCourse('${course.id}')">编辑</a>

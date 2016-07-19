@@ -110,8 +110,8 @@
 											<td>${record.userInfo.nickName }</td>
 											<td>
 												<c:choose>
-													<c:when test="${record.isStandby eq '1' }">预约成功</c:when>
-													<c:otherwise>候补排队</c:otherwise>
+													<c:when test="${record.isStandby eq '1' }"><font color="blue">预约成功</font></c:when>
+													<c:otherwise><font color="red">候补排队</font></c:otherwise>
 												</c:choose>
 											</td>
 											<td><fmt:formatDate value="${record.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>

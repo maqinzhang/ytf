@@ -40,7 +40,15 @@
 									<section>
 										<h2>${courseRecord.course.name }</h2>
 										<h5>
-											<span>开课时间：${courseRecord.course.courseDate } ${courseRecord.course.beginTime }-${courseRecord.course.endTime }</span>
+											<span style=" overflow: visible;">
+												开课时间：${courseRecord.course.courseDate } ${courseRecord.course.beginTime }-${courseRecord.course.endTime } 
+											</span>
+											<span style=" text-align: right;">
+												<c:choose>
+													<c:when test="${courseRecord.isStandby eq '1' }"><font color="blue">预约成功</font></c:when>
+													<c:otherwise><font color="red">候补排队</font></c:otherwise>
+												</c:choose>
+											</span>
 										</h5>
 										<h5>
 											<span>教练：${courseRecord.course.coach }</span>
