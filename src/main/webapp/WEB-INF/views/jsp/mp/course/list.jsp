@@ -34,6 +34,14 @@
 </head>
 <body>
 	<div class="hotbody reserve_group_2">
+		<div class="logo">
+			<div style=" width: 30%;  padding-left: 20px;" >
+				<img alt="YTF" src="resources/img/logo_left.png">
+			</div>
+			<div style=" width: 80%; text-align: right; padding-right: 20px; ">
+				<img alt="CROSSFIT" src="resources/img/logo_right.png">
+			</div>
+		</div>
 		<nav id="nav">
 			<c:forEach items="${dateList }" var="date" varStatus="status">
 				<h3 <c:if test="${status.index eq 0 }">class="on"</c:if> id="${fn:substring(date, 0, 10) }">
@@ -47,27 +55,7 @@
 		<div class="list">
 			<div id="content">
 				<div id="list">
-					<c:choose>
-						<c:when test="${fn:length(courseList) > 0}">
-							<c:forEach items="${courseList }" var="course">
-								<article id="${course.id }">
-									<section>
-										<h2>${course.name }</h2>
-										<h5>
-											<span>${course.beginTime }-${course.endTime }</span>
-											<span>${course.coach }</span> 
-											<strong> 
-												人数：<em>${course.personNum }</em>/${course.personLimit }
-											</strong>
-										</h5>
-									</section>
-								</article>
-							</c:forEach>
-						</c:when>
-						<c:otherwise>
-							<div class="empty_list"><div class="empty_course"></div><p>今日暂无课程，请选择其他日期！</p></div>
-						</c:otherwise>
-					</c:choose>
+					<jsp:include page="listContent.jsp"></jsp:include>
 				</div>
 			</div>
 		</div>
@@ -76,7 +64,25 @@
 		
 		/** 绑定日期链接* */
 		$("#nav h3").on('tap', function(e) {
-			location.href = "course/list?courseDate=" + this.id;
+			
+			var courseDate = this.id;
+			
+			/** 加载列表数据  **/
+			$.ajax({
+				url : $("base").attr("href") + "course/listContent",
+				type : "post",
+				data : {
+					courseDate : courseDate
+				},
+				dataType : "html",
+				success : function(data) {
+					
+					$("#nav .on").removeClass("on");
+					$("#"+ courseDate).addClass("on");
+					$("#list").html(data);
+				}
+			});
+			//location.href = "course/list?courseDate=" + this.id;
 		});
 		
 		/** 绑定列表链接* */
