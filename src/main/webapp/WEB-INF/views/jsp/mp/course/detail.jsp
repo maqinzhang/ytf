@@ -59,7 +59,7 @@
 				<input type="hidden" id="id" value="${course.id }">
 			</div>
 			<div style="padding-left: 10px; padding-right: 10px;">
-				<a id="addBtn" class="btn-big btn-blue">预约课程</a>
+				<a id="addBtn" class="btn-big btn-red">预约课程</a>
 				<a id="backBtn" class="btn-big btn-gray">返回</a>
 			</div>
 		</div>

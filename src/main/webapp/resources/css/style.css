@@ -46,9 +46,10 @@ body>.hotbody{position:absolute;top:0;left:50%;margin-left:-375px;width:750px}
 .reserve_group_2>nav aside{position:relative;width:128px;height:100px;text-align:center;background:url("../img/date.png") no-repeat center;background-size:30px 32px}
 .reserve_group_2>nav aside em{display:block;position:absolute;top:50%;left:0;width:2px;height:60px;margin-top:-30px;background:#333}
 .reserve_group_2>nav h3{position:relative;width:207.33333px;height:100px;font-size:28px;font-weight:400;line-height:100px;text-align:center}
-.reserve_group_2>nav h3.on{color:#296ce0}
+/* .reserve_group_2>nav h3.on{color:#296ce0} 原始色彩*/
+.reserve_group_2>nav h3.on{color:#FF0000}
 .reserve_group_2>nav h3.on em{display:block}
-.reserve_group_2>nav h3 em{display:none;position:absolute;bottom:0;left:50%;margin-left:-75px;width:150px;height:6px;background:#296ce0}
+.reserve_group_2>nav h3 em{display:none;position:absolute;bottom:0;left:50%;margin-left:-75px;width:150px;height:6px;background:#FF0000}
 .reserve_group_2 .list{margin-top:10px}
 .reserve_group_2 .list article{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:box;display:flex;-webkit-box-orient:horizontal;-moz-box-orient:horizontal;-ms-flex-direction:row;-webkit-flex-direction:row;box-orient:horizontal;flex-flow:row;position:relative;margin-bottom:10px;height:180px;background:#FFF}
 .reserve_group_2 .list article>header{padding:40px 0 0;width:110px;text-align:center}
@@ -110,7 +111,7 @@ body>.hotbody{position:absolute;top:0;left:50%;margin-left:-375px;width:750px}
 }
 
 .btn-red {
-    background-color: #ed5564;
+    background-color: #FF0000;
     color: #fff;
 }
 

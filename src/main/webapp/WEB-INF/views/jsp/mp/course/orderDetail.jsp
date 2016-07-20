@@ -63,7 +63,7 @@
 				<input type="hidden" id="id" value="${userCourseRecord.id }">
 			</div>
 			<div style="padding-left: 10px; padding-right: 10px;">
-				<a id="cancleBtn" class="btn-big btn-blue">取消预约</a>
+				<a id="cancleBtn" class="btn-big btn-red">取消预约</a>
 				<a id="backBtn" class="btn-big btn-gray">返回</a>
 			</div>
 		</div>
