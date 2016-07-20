@@ -137,7 +137,7 @@
 				var x = new RegExp("\\?");
 				if (x.test(url)) {
 					//有问号
-					url = url + "&_=" +Date.parse(new Date());
+					url = url + "&_=" + Date.parse(new Date());
 				} else {
 					url = url + "?_=" + Date.parse(new Date());
 				}

@@ -49,7 +49,7 @@ body>.hotbody{position:absolute;top:0;left:50%;margin-left:-375px;width:750px}
 .reserve_group_2>nav h3.on{color:#296ce0}
 .reserve_group_2>nav h3.on em{display:block}
 .reserve_group_2>nav h3 em{display:none;position:absolute;bottom:0;left:50%;margin-left:-75px;width:150px;height:6px;background:#296ce0}
-.reserve_group_2 .list{margin-top:114px}
+.reserve_group_2 .list{margin-top:10px}
 .reserve_group_2 .list article{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:box;display:flex;-webkit-box-orient:horizontal;-moz-box-orient:horizontal;-ms-flex-direction:row;-webkit-flex-direction:row;box-orient:horizontal;flex-flow:row;position:relative;margin-bottom:10px;height:180px;background:#FFF}
 .reserve_group_2 .list article>header{padding:40px 0 0;width:110px;text-align:center}
 .reserve_group_2 .list article>header h2{font-size:32px;font-family:DINAlternate-Bold}

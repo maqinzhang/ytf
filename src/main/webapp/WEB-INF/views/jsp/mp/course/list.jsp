@@ -38,7 +38,7 @@
 			<div style=" width: 30%;  padding-left: 20px;" >
 				<img alt="YTF" src="resources/img/logo_left.png">
 			</div>
-			<div style=" width: 80%; text-align: right; padding-right: 20px; ">
+			<div style=" width: 70%; text-align: right; padding-right: 20px; ">
 				<img alt="CROSSFIT" src="resources/img/logo_right.png">
 			</div>
 		</div>
@@ -80,6 +80,11 @@
 					$("#nav .on").removeClass("on");
 					$("#"+ courseDate).addClass("on");
 					$("#list").html(data);
+					
+					/** 绑定列表链接* */
+					$("#list article").on('tap', function(e) {
+						location.href = "course/detail/" + this.id;
+					});
 				}
 			});
 			//location.href = "course/list?courseDate=" + this.id;
