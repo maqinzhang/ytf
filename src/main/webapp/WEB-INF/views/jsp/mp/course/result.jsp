@@ -26,6 +26,14 @@
 </head>
 <body>
 	<div class="hotbody arena_info">
+		<div class="logo">
+			<div style=" width: 30%;  padding-left: 20px;" >
+				<img alt="YTF" src="resources/img/logo_left.png">
+			</div>
+			<div style=" width: 80%; text-align: right; padding-right: 20px; ">
+				<img alt="CROSSFIT" src="resources/img/logo_right.png">
+			</div>
+		</div>
 		<div class="main">
 			<article class="glo_info_model"  style=" text-align: center; font-size: 1rem; margin: 2rem auto;">
 				<header>

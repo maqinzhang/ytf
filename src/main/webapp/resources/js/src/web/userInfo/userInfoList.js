@@ -28,6 +28,7 @@ $("#transferBtn").click(function(){
 		url : $("base").attr("href") + "web/userInfo/transferFromWexin",
 		type : "post",
 		dataType : "json",
+		data : {_ : Date.parse(new Date())},
 		success : function(data) {
 			if(data.success == true){
 				layer.msg("同步成功！", {

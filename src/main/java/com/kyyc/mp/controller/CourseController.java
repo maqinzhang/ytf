@@ -35,6 +35,7 @@ public class CourseController {
 	private Logger LOG = LoggerFactory.getLogger(getClass());
 
 	private static final String VIEW_TO_LIST = "mp/course/list";
+	private static final String VIEW_TO_LIST_CONTENT = "mp/course/listContent";
 	private static final String VIEW_TO_DETAIL = "mp/course/detail";
 	private static final String VIEW_TO_RESULT = "mp/course/result";
 	private static final String VIEW_TO_ORDER_RECORD = "mp/course/orderRecord";
@@ -110,6 +111,54 @@ public class CourseController {
 			LOG.error("查询课程列表出错！", e);
 		}
 		return VIEW_TO_LIST;
+	}
+	
+	
+	/**
+	 * 课程列表内容
+	 */
+	@RequestMapping("/listContent")
+	public String listContent(String courseDate, HttpServletRequest request, HttpServletResponse response, Model mode) {
+
+		try {
+			/**
+			 * 获取公众号用户惟一标识
+			 */
+			String openId = weChatMpService.getWeChatOpenId(request, response);
+			
+			/**
+			 * 为空，返回
+			 */
+			if (StringUtils.isEmpty(openId)) {
+				return null;
+			}
+
+			if (StringUtils.isEmpty(courseDate)) {
+				courseDate = DateTime.now().toString(Constants.DATETIME_10);
+			}
+
+			/**
+			 * 查询课程列表
+			 */
+			Course course = new Course();
+			course.setCourseDate(courseDate);
+			List<Course> courseList = courseService.select(course);
+
+			/**
+			 * 迭代课程， 设置当前报考人数
+			 */
+			for (Course _course : courseList) {
+				UserCourseRecord record = new UserCourseRecord();
+				record.setCourseId(_course.getId());
+				int cnt = userCourseRecordService.count(record);
+				_course.setPersonNum(cnt);
+			}
+
+			mode.addAttribute("courseList", courseList);
+		} catch (Exception e) {
+			LOG.error("查询课程列表内容出错！", e);
+		}
+		return VIEW_TO_LIST_CONTENT;
 	}
 
 	/**
