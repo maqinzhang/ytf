@@ -17,10 +17,10 @@
 				onclick="toLocation(0, 'web/course/list', '01', '00')"
 				id="rs_01" url="default" isnewtab="0" rs="01"
 				prs="00" code="01">课程管理</a>
-<!-- 			<a href="javascript:;"
-				onclick="toLocation(0, 'web/course/courseRecord', '02', '00')"
+ 			<a href="javascript:;"
+				onclick="toLocation(0, 'web/meal/list', '02', '00')"
 				id="rs_02" url="default" isnewtab="0" rs="02"
-				prs="00" code="02">预约管理</a> -->
+				prs="00" code="02">餐食管理</a>
 			<a href="javascript:;"
 				onclick="toLocation(0, 'web/userInfo/userInfoList', '03', '00')"
 				id="rs_03" url="default" isnewtab="0" rs="03"

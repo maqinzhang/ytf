@@ -12,7 +12,7 @@
 <html>
 <head>
 <base href="<%=basePath%>">
-<title>课程预约</title>
+<title>餐食预约</title>
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" media="screen" />
 <meta content="Home" http-equiv="description">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -42,27 +42,35 @@
 			<div id="content">
 				<div id="list">
 					<c:choose>
-						<c:when test="${fn:length(courseRecordList) > 0}">
-							<c:forEach items="${courseRecordList }" var="courseRecord">
-								<article id="${courseRecord.id }" style=" height: 230px;">
+						<c:when test="${fn:length(mealRecordList) > 0}">
+							<c:forEach items="${mealRecordList }" var="mealRecord">
+								<article id="${mealRecord.id }" style=" height: 230px;">
 									<section>
-										<h2>${courseRecord.course.name }</h2>
+										<h2>${mealRecord.meal.name }</h2>
 										<h5>
 											<span style=" overflow: visible;">
-												开课时间：${courseRecord.course.courseDate } ${courseRecord.course.beginTime }-${courseRecord.course.endTime } 
+												餐食时间：${mealRecord.meal.mealDate }
 											</span>
 											<strong>
+												餐食类目：
 												<c:choose>
-													<c:when test="${courseRecord.isStandby eq '1' }"><font color="red">候补排队</font></c:when>
-													<c:otherwise><font color="blue">预约成功</font></c:otherwise>
+													<c:when test="${mealRecord.meal.type eq '1' }">食品类</c:when>
+													<c:when test="${mealRecord.meal.type eq '2' }">饮品类</c:when>
+													<c:otherwise>${mealRecord.meal.type }</c:otherwise>
 												</c:choose>
 											</strong>
 										</h5>
 										<h5>
-											<span>教练：${courseRecord.course.coach }</span>
-											<span>人数：${courseRecord.course.personNum }</span> 
+											<span>预约数量：${mealRecord.orderNum }</span>
+											<span>
+												是否配送：
+												<c:choose>
+													<c:when test="${mealRecord.isDelivery eq '1' }"><font color="red">是</font></c:when>
+													<c:otherwise><font color="blue">否</font></c:otherwise>
+												</c:choose>
+											</span>
 											<strong> 
-												预约时间：<em><fmt:formatDate value="${courseRecord.createTime}" pattern="yyyy-MM-dd"/></em>
+												预约时间：<em><fmt:formatDate value="${mealRecord.createTime}" pattern="yyyy-MM-dd"/></em>
 											</strong>
 										</h5>
 									</section>
@@ -70,7 +78,7 @@
 							</c:forEach>
 						</c:when>
 						<c:otherwise>
-							<div class="empty_list"><div class="empty_course"></div><p>暂无预约课程！</p></div>
+							<div class="empty_list"><div class="empty_course"></div><p>暂无预约餐食！</p></div>
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -80,7 +88,7 @@
 	<script type="text/javascript">
 		/** 绑定列表链接* */
 		$("#list article").on('tap', function(e) {
-			location.href = "course/orderDetail/" + this.id;
+			location.href = "meal/orderDetail/" + this.id;
 		});
 	</script>
 </body>

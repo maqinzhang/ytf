@@ -13,75 +13,52 @@
 <form name="submitForm" id="submitForm" method="post">
 
 	<!-- 设置隐藏域的值 -->
-	<input type="hidden" id="id" name="id" value="${course.id }" /> 
+	<input type="hidden" id="id" name="id" value="${meal.id }" /> 
 
 	<div class="crumbs">
 		<!-- 导航菜单 -->
-		<i class="iconfont">&#xe628;</i>我的菜单<span>&gt;</span>课程管理<span>&gt;</span>课程信息
+		<i class="iconfont">&#xe628;</i>我的菜单<span>&gt;</span>餐食管理<span>&gt;</span>餐食信息
 	</div>
 	
-	<h2>课程信息</h2>
+	<h2>餐食信息</h2>
 	<div class="well2">
 		<div class="form-horizontal">
-			<div class="tips tips-notice">
-				注：基础课程是固定课程，可做调整，以选择形式填入，其他课程均为手动录入名称的形式！ <br />
-			</div>
-			
-			<div class="row mt10">
-				<label class="control-label">是否基础课程：</label>
-				<div class="controls">
-					<c:choose>
-						<c:when test="${course.isBase eq '1' }">是</c:when>
-						<c:otherwise>否</c:otherwise>
-					</c:choose>
-				</div>
-			</div>
-			
 			<div class="row mt10 ">
-				<label class="control-label">课程名称：</label>
-				<div class="controls">
-					${course.name }
-				</div>
-			</div>
-			
-			<div class="row mt10">
-				<label class="control-label">开课日期：</label>
-				<div class="controls">
-					${course.courseDate }
-				</div>
-			</div>
-			<div class="row mt10">
-				<label class="control-label">开课时间：</label>
-				<div class="controls">
-					${course.beginTime }  - ${course.endTime }
-				</div>
-			</div>
-			<div class="row  mt10">
-				<label class="control-label">教练：</label>
-				<div class="controls">
-					${course.coach }
-				</div>
-			</div>
-			<div class="row mt10">
-				<label class="control-label">人数：</label>
+				<label class="control-label">餐食类目：</label>
 				<div class="controls">
 					<c:choose>
-						<c:when test="${course.personNum gt course.personLimit }">
-							<font color="red">${course.personLimit }人预约、${course.personNum - course.personLimit }人排队</font>
-						</c:when>
-						<c:otherwise><font color="red">${course.personNum }人预约</font> </c:otherwise>
+						<c:when test="${meal.type eq '1' }">食品类</c:when>
+						<c:when test="${meal.type eq '2' }">饮品类</c:when>
+						<c:otherwise>${meal.type }</c:otherwise>
 					</c:choose>
-					/ <font color="blue">限制${course.personLimit }人</font>
+				</div>
+			</div>
+			<div class="row mt10 ">
+				<label class="control-label">餐食名称：</label>
+				<div class="controls">
+					${meal.name }
 				</div>
 			</div>
 			<div class="row mt10">
-				<label class="control-label">课程描述：</label>
-				<div class="controls" id="content">${course.content }</div>
+				<label class="control-label">餐食日期：</label>
+				<div class="controls">
+					${meal.mealDate }
+				</div>
+			</div>
+			<div class="row mt10">
+				<label class="control-label">餐食人数：</label>
+				<div class="controls">
+					<font color="red">${meal.orderNum }人预约</font>  / <font color="blue">限制${meal.orderLimit }人</font>
+				</div>
+			</div>
+			<div class="row mt10">
+				<label class="control-label">餐食描述：</label>
+				<div class="controls" id="content">${meal.content }</div>
 			</div>
 		</div>
 	</div>
 
-	<h2>课程预约记录</h2>
+	<h2>餐食预约记录</h2>
 	<div class="well2 vertical-main">
 		<div class="form-horizontal">
             <div class="row">
@@ -96,28 +73,32 @@
 						<thead>
 							<tr>
 								<th>预约用户</th>
-								<th>预约状态</th>
+								<th>预约数量</th>
+								<th>是否配送</th>
+								<th>配送地址</th>
 								<th>预约时间</th>
 							</tr>
 						</thead>
 						<tbody>
 							<c:choose>
-								<c:when test="${not empty userCourseRecordList }">
-									<c:forEach items="${userCourseRecordList }" var="record">
+								<c:when test="${not empty userMealRecordList }">
+									<c:forEach items="${userMealRecordList }" var="record">
 										<tr>
 											<td>${record.userInfo.nickName }</td>
+											<td>${record.orderNum }</td>
 											<td>
 												<c:choose>
-													<c:when test="${record.isStandby eq '1' }"><font color="red">候补排队</font></c:when>
-													<c:otherwise><font color="blue">预约成功</font></c:otherwise>
+													<c:when test="${record.isDelivery eq '1' }"><font color="red">是</font></c:when>
+													<c:otherwise><font color="blue">否</font></c:otherwise>
 												</c:choose>
 											</td>
+											<td>${record.deliveryAddress }</td>
 											<td><fmt:formatDate value="${record.createTime }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 										</tr>
 									</c:forEach>
 								</c:when>
 								<c:otherwise>
-									<tr><td colspan="3">暂无预约记录！</td></tr>
+									<tr><td colspan="5">暂无预约记录！</td></tr>
 								</c:otherwise>
 							</c:choose>
 						</tbody>
@@ -135,7 +116,7 @@
 		</div>
 	</div>
 </form>
-<script src="resources/js/src/web/course/course.js" type="text/javascript"></script>
+<script src="resources/js/src/web/meal/meal.js" type="text/javascript"></script>
 <script type="text/javascript">
 	/**替换textarea换行**/
 	var reg = new RegExp("\n", "gi");  

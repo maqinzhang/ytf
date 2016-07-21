@@ -112,8 +112,7 @@ public class CourseController {
 		}
 		return VIEW_TO_LIST;
 	}
-	
-	
+
 	/**
 	 * 课程列表内容
 	 */
@@ -125,7 +124,7 @@ public class CourseController {
 			 * 获取公众号用户惟一标识
 			 */
 			String openId = weChatMpService.getWeChatOpenId(request, response);
-			
+
 			/**
 			 * 为空，返回
 			 */
@@ -152,6 +151,12 @@ public class CourseController {
 				record.setCourseId(_course.getId());
 				int cnt = userCourseRecordService.count(record);
 				_course.setPersonNum(cnt);
+
+				/**
+				 * 重新设置开课时间
+				 */
+				_course.setCourseDate(_course.getCourseDate() + " "
+						+ DateTime.parse(_course.getCourseDate()).dayOfWeek().getAsShortText());
 			}
 
 			mode.addAttribute("courseList", courseList);
@@ -168,6 +173,12 @@ public class CourseController {
 	public String detail(@PathVariable int id, Model mode) {
 		try {
 			Course course = courseService.selectById(id);
+
+			/**
+			 * 重新设置开课时间
+			 */
+			course.setCourseDate(course.getCourseDate() + " "
+					+ DateTime.parse(course.getCourseDate()).dayOfWeek().getAsShortText());
 
 			/**
 			 * 设置当前报考人数
@@ -207,10 +218,16 @@ public class CourseController {
 			 */
 			Course course = courseService.selectById(id);
 
+			/**
+			 * 重新设置开课时间
+			 */
+			course.setCourseDate(course.getCourseDate() + " "
+					+ DateTime.parse(course.getCourseDate()).dayOfWeek().getAsShortText());
+
 			UserCourseRecord record = new UserCourseRecord();
 			record.setCourseId(id);
 			int count = userCourseRecordService.count(record);
-			
+
 			/**
 			 * 判断当前预约是否已经满额，如果满额，则为候补人员等待
 			 */
@@ -234,13 +251,13 @@ public class CourseController {
 			 * 判断是否预约过；规则：基础课一人只能预约一次
 			 */
 			if ("1".equals(course.getIsBase())) {
-				
+
 				recordCount = userCourseRecordService.countBaseCourse(openId, course.getCode());
 			} else {
 				_record.setCourseId(id);
 				recordCount = userCourseRecordService.count(_record);
 			}
-			
+
 			if (recordCount > 0) {
 				model.addAttribute("success", false);
 				model.addAttribute("msg", "该课程您已经预约过，请选择其他课程！");
@@ -280,6 +297,12 @@ public class CourseController {
 			 * 获取课程信息
 			 */
 			Course course = courseService.selectById(record.getCourseId());
+
+			/**
+			 * 重新设置开课时间
+			 */
+			course.setCourseDate(course.getCourseDate() + " "
+					+ DateTime.parse(course.getCourseDate()).dayOfWeek().getAsShortText());
 
 			/**
 			 * 设置当前报考人数
@@ -364,6 +387,13 @@ public class CourseController {
 			 */
 			for (UserCourseRecord _record : recordList) {
 				Course course = courseService.selectById(_record.getCourseId());
+
+				/**
+				 * 重新设置开课时间
+				 */
+				course.setCourseDate(course.getCourseDate() + " "
+						+ DateTime.parse(course.getCourseDate()).dayOfWeek().getAsShortText());
+
 				/**
 				 * 设置当前报考人数
 				 */

@@ -10,7 +10,7 @@ import com.kyyc.core.service.BaseService;
 
 /**
  * 
- * 课程管理业务类
+ * 餐食管理业务类
  * 
  * @author MaQinZh
  *

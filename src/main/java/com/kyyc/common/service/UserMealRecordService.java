@@ -21,4 +21,16 @@ public class UserMealRecordService extends BaseService<UserMealRecord> {
 	@Resource
 	private UserMealRecordMapper userMealRecordMapper;
 
+	/**
+	 * 餐饮订购总和
+	 * 
+	 * 
+	 * @param mealId
+	 *            餐饮ID
+	 * @return
+	 */
+	public int countOrderNum(int mealId) {
+		return userMealRecordMapper.countOrderNum(mealId);
+	}
+
 }

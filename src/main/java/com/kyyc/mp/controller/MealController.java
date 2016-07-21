@@ -1,6 +1,7 @@
 package com.kyyc.mp.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -18,13 +20,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kyyc.common.model.Meal;
 import com.kyyc.common.model.UserMealRecord;
+import com.kyyc.common.model.WeChatConstants;
 import com.kyyc.common.service.MealService;
 import com.kyyc.common.service.UserMealRecordService;
 import com.kyyc.core.model.Constants;
 import com.kyyc.mp.service.WeChatMpService;
 
 /**
- * 订餐管理
+ * 公众号餐食管理
  * 
  * @author MaQinZh 2016年7月6日下午4:53:34
  */
@@ -35,6 +38,7 @@ public class MealController {
 	private Logger LOG = LoggerFactory.getLogger(getClass());
 
 	private static final String VIEW_TO_LIST = "mp/meal/list";
+	private static final String VIEW_TO_LIST_CONTENT = "mp/meal/listContent";
 	private static final String VIEW_TO_DETAIL = "mp/meal/detail";
 	private static final String VIEW_TO_RESULT = "mp/meal/result";
 	private static final String VIEW_TO_ORDER_RECORD = "mp/meal/orderRecord";
@@ -48,7 +52,7 @@ public class MealController {
 	private WeChatMpService weChatMpService;
 
 	/**
-	 * 课程列表
+	 * 餐食列表
 	 */
 	@RequestMapping("/list")
 	public String list(String mealDate, HttpServletRequest request, HttpServletResponse response, Model mode) {
@@ -88,32 +92,75 @@ public class MealController {
 					+ DateTime.parse(mealDate).plusDays(2).dayOfWeek().getAsShortText());
 
 			/**
-			 * 查询课程列表
+			 * 查询餐食列表
 			 */
 			Meal meal = new Meal();
 			meal.setMealDate(mealDate);
 			List<Meal> mealList = mealService.select(meal);
 
 			/**
-			 * 迭代课程， 设置当前报考人数
+			 * 迭代餐食， 设置当前预定份数
 			 */
 			for (Meal _meal : mealList) {
-				UserMealRecord record = new UserMealRecord();
-				record.setMealId(_meal.getId());
-				int cnt = userMealRecordService.count(record);
-				_meal.setPersonNum(cnt);
+				int cnt = userMealRecordService.countOrderNum(_meal.getId());
+				_meal.setOrderNum(cnt);
 			}
 
 			mode.addAttribute("dateList", dateList);
 			mode.addAttribute("mealList", mealList);
 		} catch (Exception e) {
-			LOG.error("查询课程列表出错！", e);
+			LOG.error("查询餐食列表出错！", e);
 		}
 		return VIEW_TO_LIST;
 	}
 
 	/**
-	 * 课程详情
+	 * 餐食列表内容
+	 */
+	@RequestMapping("/listContent")
+	public String listContent(String mealDate, HttpServletRequest request, HttpServletResponse response, Model mode) {
+
+		try {
+			/**
+			 * 获取公众号用户惟一标识
+			 */
+			String openId = weChatMpService.getWeChatOpenId(request, response);
+
+			/**
+			 * 为空，返回
+			 */
+			if (StringUtils.isEmpty(openId)) {
+				return null;
+			}
+
+			if (StringUtils.isEmpty(mealDate)) {
+				mealDate = DateTime.now().toString(Constants.DATETIME_10);
+			}
+
+			/**
+			 * 查询餐食列表
+			 */
+			Meal meal = new Meal();
+			meal.setMealDate(mealDate);
+			List<Meal> mealList = mealService.select(meal);
+
+			/**
+			 * 迭代餐食， 设置当前预定份数
+			 */
+			for (Meal _meal : mealList) {
+				int cnt = userMealRecordService.countOrderNum(_meal.getId());
+				_meal.setOrderNum(cnt);
+			}
+
+			mode.addAttribute("mealList", mealList);
+		} catch (Exception e) {
+			LOG.error("查询餐食列表内容出错！", e);
+		}
+		return VIEW_TO_LIST_CONTENT;
+	}
+
+	/**
+	 * 餐食详情
 	 */
 	@RequestMapping("/detail/{id}")
 	public String detail(@PathVariable int id, Model mode) {
@@ -121,25 +168,24 @@ public class MealController {
 			Meal meal = mealService.selectById(id);
 
 			/**
-			 * 设置当前报考人数
+			 * 设置当前预定份数
 			 */
-			UserMealRecord record = new UserMealRecord();
-			record.setMealId(id);
-			int cnt = userMealRecordService.count(record);
-			meal.setPersonNum(cnt);
+			int cnt = userMealRecordService.countOrderNum(id);
+			meal.setOrderNum(cnt);
 
 			mode.addAttribute("meal", meal);
 		} catch (Exception e) {
-			LOG.error("查询课程详情出错！", e);
+			LOG.error("查询餐食详情出错！", e);
 		}
 		return VIEW_TO_DETAIL;
 	}
 
 	/**
-	 * 预约课程
+	 * 预约餐食
 	 */
-	@RequestMapping("/order/{id}")
-	public String order(@PathVariable int id, HttpServletRequest request, HttpServletResponse response, Model model) {
+	@RequestMapping("/order")
+	public String order(UserMealRecord userMealRecord, HttpServletRequest request, HttpServletResponse response,
+			Model model) {
 		try {
 
 			/**
@@ -154,45 +200,41 @@ public class MealController {
 			}
 
 			/**
-			 * 获取当前课程
+			 * 获取当前餐食
 			 */
-			Meal meal = mealService.selectById(id);
+			Meal meal = mealService.selectById(userMealRecord.getMealId());
 
-			UserMealRecord record = new UserMealRecord();
-			record.setMealId(id);
-			int count = userMealRecordService.count(record);
+			int cnt = userMealRecordService.countOrderNum(userMealRecord.getMealId());
+
 			/**
 			 * 判断当前预约是否已经满额
 			 */
-			if (meal.getPersonLimit() <= count) {
+			if (meal.getOrderLimit() <= cnt) {
 				model.addAttribute("success", false);
-				model.addAttribute("msg", "该课程已经达到预约人数，请选择其他课程！");
+				model.addAttribute("msg", "该餐食已经定完，请选择其他餐食！");
 				return VIEW_TO_RESULT;
 			}
 
-			record.setUserId(openId);
-			int recordCount = userMealRecordService.count(record);
 			/**
-			 * 判断是否预约过；规则：基础课一人只能预约一次
+			 * 判断当前预约是否已经满额
 			 */
-			if ("1".equals(meal.getIsBase())) {
-				if (recordCount > 0) {
-					model.addAttribute("success", false);
-					model.addAttribute("msg", "该课程您已经预约过，请选择其他课程！");
-					return VIEW_TO_RESULT;
-				}
+			if (meal.getOrderLimit() < cnt + userMealRecord.getOrderNum()) {
+				model.addAttribute("success", false);
+				model.addAttribute("msg", "您预约的数量超过最大的库存量！");
+				return VIEW_TO_RESULT;
 			}
 
 			/**
 			 * 保存预约记录
 			 */
-			record.setCreateTime(DateTime.now().toDate());
-			userMealRecordService.save(record);
+			userMealRecord.setUserId(openId);
+			userMealRecord.setCreateTime(DateTime.now().toDate());
+			userMealRecordService.save(userMealRecord);
 
 			model.addAttribute("success", true);
-			model.addAttribute("msg", "课程预约成功！");
+			model.addAttribute("msg", "餐食预约成功！");
 		} catch (Exception e) {
-			LOG.error("预约课程出错！", e);
+			LOG.error("预约餐食出错！", e);
 			model.addAttribute("success", false);
 			model.addAttribute("msg", "系统出错，请联系管理员！");
 		}
@@ -200,7 +242,7 @@ public class MealController {
 	}
 
 	/**
-	 * 预约课程详情
+	 * 预约餐食详情
 	 */
 	@RequestMapping("/orderDetail/{id}")
 	public String orderDetail(@PathVariable int id, Model mode) {
@@ -212,32 +254,30 @@ public class MealController {
 			UserMealRecord record = userMealRecordService.selectById(id);
 
 			/**
-			 * 获取课程信息
+			 * 获取餐食信息
 			 */
 			Meal meal = mealService.selectById(record.getMealId());
 
 			/**
-			 * 设置当前报考人数
+			 * 设置当前预定份数
 			 */
-			UserMealRecord _record = new UserMealRecord();
-			_record.setMealId(record.getMealId());
-			int cnt = userMealRecordService.count(_record);
-			meal.setPersonNum(cnt);
+			int cnt = userMealRecordService.countOrderNum(record.getMealId());
+			meal.setOrderNum(cnt);
 
 			/**
-			 * 设置课程
+			 * 设置餐食
 			 */
 			record.setMeal(meal);
 
 			mode.addAttribute("userMealRecord", record);
 		} catch (Exception e) {
-			LOG.error("预约课程详情出错！", e);
+			LOG.error("预约餐食详情出错！", e);
 		}
 		return VIEW_TO_ORDER_DETAIL;
 	}
 
 	/**
-	 * 取消预约课程
+	 * 取消预约餐食
 	 */
 	@RequestMapping("/cancle/{id}")
 	public String cancle(@PathVariable int id, HttpServletRequest request, HttpServletResponse response, Model model) {
@@ -255,15 +295,36 @@ public class MealController {
 			}
 
 			/**
+			 * 获取预约记录
+			 */
+			UserMealRecord record = userMealRecordService.selectById(id);
+
+			/**
+			 * 获取餐食信息
+			 */
+			Meal meal = mealService.selectById(record.getMealId());
+
+			/**
+			 * 截止时间判断是否可以进行取消预约操作
+			 */
+			Date limitDate = DateTime.parse(meal.getMealDate() + " " + WeChatConstants.MEAL_CANCLE_TIME_LIMIT,
+					DateTimeFormat.forPattern(Constants.DATETIME_14_COMMON)).toDate();
+			if (DateTime.now().toDate().after(limitDate)) {
+				model.addAttribute("success", false);
+				model.addAttribute("msg", "已经超过餐食取消的截止日期了！");
+				return VIEW_TO_RESULT;
+			}
+
+			/**
 			 * 取消预约记录
 			 */
 			userMealRecordService.deleteById(id);
 
 			model.addAttribute("success", true);
-			model.addAttribute("msg", "课程取消预约成功！");
+			model.addAttribute("msg", "餐食取消预约成功！");
 
 		} catch (Exception e) {
-			LOG.error("取消预约课程出错！", e);
+			LOG.error("取消预约餐食出错！", e);
 			model.addAttribute("success", false);
 			model.addAttribute("msg", "系统出错，请联系管理员！");
 		}
@@ -288,30 +349,28 @@ public class MealController {
 			}
 
 			/**
-			 * 设置当前报考人数
+			 * 订餐记录
 			 */
 			UserMealRecord record = new UserMealRecord();
 			record.setUserId(openId);
 			List<UserMealRecord> recordList = userMealRecordService.select(record);
 
 			/**
-			 * 迭代获取课程信息
+			 * 迭代获取餐食信息
 			 */
 			for (UserMealRecord _record : recordList) {
 				Meal meal = mealService.selectById(_record.getMealId());
 				/**
-				 * 设置当前报考人数
+				 * 设置当前预定份数
 				 */
-				UserMealRecord rcd = new UserMealRecord();
-				rcd.setMealId(meal.getId());
-				int cnt = userMealRecordService.count(rcd);
-				meal.setPersonNum(cnt);
+				int cnt = userMealRecordService.countOrderNum(meal.getId());
+				meal.setOrderNum(cnt);
 				_record.setMeal(meal);
 			}
 
 			mode.addAttribute("mealRecordList", recordList);
 		} catch (Exception e) {
-			LOG.error("查询课程详情出错！", e);
+			LOG.error("查询餐食详情出错！", e);
 		}
 		return VIEW_TO_ORDER_RECORD;
 	}

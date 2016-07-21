@@ -4,12 +4,10 @@
 	<resultMap id="BaseResultMap" type="com.kyyc.common.model.Meal">
 		<id column="ID" property="id" jdbcType="INTEGER" />
 		<result column="NAME" property="name" jdbcType="VARCHAR" />
-		<result column="IS_BASE" property="isBase" jdbcType="VARCHAR" />
-		<result column="COURSE_DATE" property="courseDate" jdbcType="VARCHAR" />
-		<result column="BEGIN_TIME" property="beginTime" jdbcType="VARCHAR" />
-		<result column="END_TIME" property="endTime" jdbcType="VARCHAR" />
-		<result column="COACH" property="coach" jdbcType="VARCHAR" />
-		<result column="PERSON_LIMIT" property="personLimit" jdbcType="INTEGER" />
+		<result column="TYPE" property="type" jdbcType="VARCHAR" />
+		<result column="PIC_URL" property="picUrl" jdbcType="VARCHAR" />
+		<result column="MEAL_DATE" property="mealDate" jdbcType="VARCHAR" />
+		<result column="ORDER_LIMIT" property="orderLimit" jdbcType="INTEGER" />
 		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
 		<result column="CONTENT" property="content" jdbcType="LONGVARCHAR" />
 	</resultMap>

@@ -1,8 +1,8 @@
-/** 课程列表查询* */
+/** 餐食列表查询* */
 function queryList() {
 
 	$.ajax({
-		url : $("base").attr("href") + "web/course/coursePageContent",
+		url : $("base").attr("href") + "web/meal/mealPageContent",
 		type : "post",
 		data : {
 			beginDate : $("#beginDate").val(),
@@ -16,34 +16,34 @@ function queryList() {
 }
 $("#queryBtn").click(queryList);
 
-/** 新增课程 * */
+/** 新增餐食 * */
 $("#addBtn").click(function() {
 	// 业务代码
 	var locationUrl = "beginDate=" + $("#beginDate").val() + "&endDate="
 			+ $("#endDate").val() + "&rs=" + $("#rs").val() + "&prs="
 			+ $("#prs").val();
 	
-	loadPage("web/course/info?" + locationUrl);
+	loadPage("web/meal/info?" + locationUrl);
 });
 
-/** 修改课程 * */
-function editCourse(id) {
+/** 修改餐食 * */
+function editMeal(id) {
 	
 	// 业务代码
 	var locationUrl = "beginDate=" + $("#beginDate").val() + "&endDate="
 			+ $("#endDate").val() + "&rs=" + $("#rs").val() + "&prs="
 			+ $("#prs").val();
 	
-	loadPage("web/course/info?id=" + id + "&" + locationUrl);
+	loadPage("web/meal/info?id=" + id + "&" + locationUrl);
 }
 
-/** 删除课程 * */
-function deleteCourse(id) {
+/** 删除餐食 * */
+function deleteMeal(id) {
 	
-	layer.confirm('您确认删除该课程？', function() {
+	layer.confirm('您确认删除该餐食？', function() {
 		// 确认
 		$.ajax({
-			url : $("base").attr("href") + "web/course/deleteCourse",
+			url : $("base").attr("href") + "web/meal/deleteMeal",
 			type : "post",
 			data : {
 				id : id
@@ -62,7 +62,7 @@ function deleteCourse(id) {
 								+ $("#prs").val();
 						
 						// 关闭后的操作
-						loadPage("web/course/list?" + locationUrl);
+						loadPage("web/meal/list?" + locationUrl);
 					});
 				} else {
 					layer.msg("系统出错，请联系管理员！");
@@ -74,13 +74,13 @@ function deleteCourse(id) {
 	});
 }
 
-/** 课程详情 * */
-function detailCourse(id) {
+/** 餐食详情 * */
+function detailMeal(id) {
 	
 	// 业务代码
 	var locationUrl = "beginDate=" + $("#beginDate").val() + "&endDate="
 			+ $("#endDate").val() + "&rs=" + $("#rs").val() + "&prs="
 			+ $("#prs").val();
 	
-	loadPage("web/course/detail/" + id + "?" + locationUrl);
+	loadPage("web/meal/detail/" + id + "?" + locationUrl);
 }

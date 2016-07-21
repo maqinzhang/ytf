@@ -3,6 +3,7 @@ package com.kyyc.common.model;
 import java.util.Date;
 
 import javax.persistence.Id;
+import javax.persistence.OrderBy;
 
 import com.kyyc.core.model.BaseModel;
 
@@ -79,6 +80,7 @@ public class UserInfo extends BaseModel {
 	/**
 	 * 注册时间
 	 */
+	@OrderBy("DESC")
 	private Date regTime;
 
 	/**

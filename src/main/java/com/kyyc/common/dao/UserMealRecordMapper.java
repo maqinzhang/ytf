@@ -9,4 +9,14 @@ import com.kyyc.core.dao.BaseMapper;
  * @author MaQinZh 2016年7月6日下午4:17:08
  */
 public interface UserMealRecordMapper extends BaseMapper<UserMealRecord> {
+
+	/**
+	 * 餐饮订购总和
+	 * 
+	 * 
+	 * @param mealId
+	 *            餐饮ID
+	 * @return
+	 */
+	public int countOrderNum(int mealId);
 }

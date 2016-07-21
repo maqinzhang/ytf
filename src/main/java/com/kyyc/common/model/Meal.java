@@ -26,50 +26,35 @@ public class Meal extends BaseModel {
 	private Integer id;
 
 	/**
-	 * 课程名称
+	 * 餐饮名称
 	 */
 	private String name;
 
 	/**
-	 * 是否基础课（0：否，1：是）
+	 * 餐食类目
 	 */
-	private String isBase;
+	private String type;
 
 	/**
-	 * 开课日期（格式：yyyy-MM-dd）
+	 * 图片地址
+	 */
+	private String picUrl;
+
+	/**
+	 * 餐饮日期（格式：yyyy-MM-dd）
 	 */
 	private String mealDate;
 
 	/**
-	 * 开始时间（如12:00）
+	 * 订餐数量限制
 	 */
-	private String beginTime;
-
-	/**
-	 * 结束时间（如13:00）
-	 */
-	private String endTime;
-
-	/**
-	 * 教练
-	 */
-	private String coach;
-
-	/**
-	 * 上课人数限制
-	 */
-	private Integer personLimit;
-
-	/**
-	 * 上课人数限制
-	 */
-	private String isStandby;
+	private Integer orderLimit;
 
 	/**
 	 * 当前预约人数
 	 */
 	@Transient
-	private Integer personNum;
+	private Integer orderNum;
 
 	/**
 	 * 录入时间
@@ -77,7 +62,7 @@ public class Meal extends BaseModel {
 	private Date createTime;
 
 	/**
-	 * 课程内容
+	 * 餐饮内容
 	 */
 	private String content;
 
@@ -101,174 +86,117 @@ public class Meal extends BaseModel {
 	}
 
 	/**
-	 * 获取课程名称
+	 * 获取餐饮名称
 	 *
-	 * @return NAME - 课程名称
+	 * @return NAME - 餐饮名称
 	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
-	 * 设置课程名称
+	 * 设置餐饮名称
 	 *
 	 * @param name
-	 *            课程名称
+	 *            餐饮名称
 	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
 	/**
-	 * 获取是否基础课（0：否，1：是）
+	 * 获取餐食类目
 	 *
-	 * @return IS_BASE - 是否基础课（0：否，1：是）
+	 * @return TYPE -餐食类目
 	 */
-	public String getIsBase() {
-		return isBase;
+	public String getType() {
+		return type;
 	}
 
 	/**
-	 * 设置是否基础课（0：否，1：是）
+	 * 设置餐食类目
 	 *
-	 * @param isBase
-	 *            是否基础课（0：否，1：是）
+	 * @param type
+	 *            餐食类目
 	 */
-	public void setIsBase(String isBase) {
-		this.isBase = isBase;
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	/**
-	 * 获取开课日期（格式：yyyy-MM-dd）
+	 * 获取图片地址
 	 *
-	 * @return COURSE_DATE - 开课日期（格式：yyyy-MM-dd）
+	 * @return PIC_URL - 图片地址
+	 */
+	public String getPicUrl() {
+		return picUrl;
+	}
+
+	/**
+	 * 设置图片地址
+	 *
+	 * @param picUrl
+	 *            图片地址
+	 */
+	public void setPicUrl(String picUrl) {
+		this.picUrl = picUrl;
+	}
+
+	/**
+	 * 获取餐饮日期（格式：yyyy-MM-dd）
+	 *
+	 * @return COURSE_DATE - 餐饮日期（格式：yyyy-MM-dd）
 	 */
 	public String getMealDate() {
 		return mealDate;
 	}
 
 	/**
-	 * 设置开课日期（格式：yyyy-MM-dd）
+	 * 设置餐饮日期（格式：yyyy-MM-dd）
 	 *
 	 * @param mealDate
-	 *            开课日期（格式：yyyy-MM-dd）
+	 *            餐饮日期（格式：yyyy-MM-dd）
 	 */
 	public void setMealDate(String mealDate) {
 		this.mealDate = mealDate;
 	}
 
 	/**
-	 * 获取开始时间（如12:00）
+	 * 获取订餐数量限制
 	 *
-	 * @return BEGIN_TIME - 开始时间（如12:00）
+	 * @return PERSON_LIMIT - 订餐数量限制
 	 */
-	public String getBeginTime() {
-		return beginTime;
+	public Integer getOrderLimit() {
+		return orderLimit;
 	}
 
 	/**
-	 * 设置开始时间（如12:00）
+	 * 设置订餐数量限制
 	 *
-	 * @param beginTime
-	 *            开始时间（如12:00）
+	 * @param orderLimit
+	 *            订餐数量限制
 	 */
-	public void setBeginTime(String beginTime) {
-		this.beginTime = beginTime;
+	public void setOrderLimit(Integer orderLimit) {
+		this.orderLimit = orderLimit;
 	}
 
 	/**
-	 * 获取结束时间（如13:00）
+	 * 获取订餐数量
 	 *
-	 * @return END_TIME - 结束时间（如13:00）
+	 * @return PERSON_NUM - 订餐数量
 	 */
-	public String getEndTime() {
-		return endTime;
+	public Integer getOrderNum() {
+		return orderNum;
 	}
 
 	/**
-	 * 设置结束时间（如13:00）
+	 * 设置订餐数量
 	 *
-	 * @param endTime
-	 *            结束时间（如13:00）
+	 * @param orderNum
+	 *            订餐数量
 	 */
-	public void setEndTime(String endTime) {
-		this.endTime = endTime;
-	}
-
-	/**
-	 * 获取教练
-	 *
-	 * @return COACH - 教练
-	 */
-	public String getCoach() {
-		return coach;
-	}
-
-	/**
-	 * 设置教练
-	 *
-	 * @param coach
-	 *            教练
-	 */
-	public void setCoach(String coach) {
-		this.coach = coach;
-	}
-
-	/**
-	 * 获取上课人数限制
-	 *
-	 * @return PERSON_LIMIT - 上课人数限制
-	 */
-	public Integer getPersonLimit() {
-		return personLimit;
-	}
-
-	/**
-	 * 设置上课人数限制
-	 *
-	 * @param personLimit
-	 *            上课人数限制
-	 */
-	public void setPersonLimit(Integer personLimit) {
-		this.personLimit = personLimit;
-	}
-
-	/**
-	 * 获取 是否候补（0：否，1：是）
-	 *
-	 * @return IS_STANDBY - 是否候补（0：否，1：是）
-	 */
-	public String getIsStandby() {
-		return isStandby;
-	}
-
-	/**
-	 * 设置是否候补（0：否，1：是）
-	 *
-	 * @param isStandby
-	 *            是否候补（0：否，1：是）
-	 */
-	public void setIsStandby(String isStandby) {
-		this.isStandby = isStandby;
-	}
-
-	/**
-	 * 获取上课人数
-	 *
-	 * @return PERSON_NUM - 上课人数
-	 */
-	public Integer getPersonNum() {
-		return personNum;
-	}
-
-	/**
-	 * 设置上课人数
-	 *
-	 * @param personNum
-	 *            上课人数
-	 */
-	public void setPersonNum(Integer personNum) {
-		this.personNum = personNum;
+	public void setOrderNum(Integer orderNum) {
+		this.orderNum = orderNum;
 	}
 
 	/**
@@ -291,19 +219,19 @@ public class Meal extends BaseModel {
 	}
 
 	/**
-	 * 获取课程内容
+	 * 获取餐饮内容
 	 *
-	 * @return CONTENT - 课程内容
+	 * @return CONTENT - 餐饮内容
 	 */
 	public String getContent() {
 		return content;
 	}
 
 	/**
-	 * 设置课程内容
+	 * 设置餐饮内容
 	 *
 	 * @param content
-	 *            课程内容
+	 *            餐饮内容
 	 */
 	public void setContent(String content) {
 		this.content = content;

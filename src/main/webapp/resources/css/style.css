@@ -13,7 +13,9 @@ a:link,a:visited,a:hover,a:active{outline:none;text-decoration:none;}
 input,select,button,textarea{outline:none}input,textarea{vertical-align:baseline}
 input[type="text"],input[type="password"],input[type="tel"],
 textarea{box-sizing:border-box;padding:4px 6px;font-size:28px;border:1px solid #999}
-input::-webkit-input-placeholder{font-size:28px}input:-moz-placeholder{font-size:28px}input::-moz-placeholder{font-size:28px}
+input::-webkit-input-placeholder{font-size:28px}
+input:-moz-placeholder{font-size:28px}
+input::-moz-placeholder{font-size:28px}
 input:-ms-input-placeholder{font-size:28px}
 input[type="checkbox"],input[type="radio"]{margin-right:3px}img{vertical-align:middle}
 h6{font-size:28px}
@@ -123,8 +125,253 @@ body>.hotbody{position:absolute;top:0;left:50%;margin-left:-375px;width:750px}
     margin: 10px 0 10px;
     border-radius: 3px;
     font-size: 30px;
-    letter-spacing: .01rem;
+    letter-spacing: 1px;
     display: block;
 }
 
 /*# sourceMappingURL=style.css.map */
+
+
+/**遮盖所有元素的样式*/
+
+
+@font-face {font-family: "iconfont";
+  src: url('../font/iconfont.eot'); /* IE9*/
+  src: url('../font/iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('../font/iconfont.woff') format('woff'), /* chrome、firefox */
+  url('../font/iconfont.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+  url('../font/iconfont.svg#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont {
+  font-family:"iconfont" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-stroke-width: 0.2px;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icon-rili:before { content: "\e600"; }
+.icon-jia:before { content: "\e601"; }
+.icon-jian:before { content: "\e602"; }
+.icon-shijianshizhong:before { content: "\e603"; }
+
+
+.platform-send{
+	position: absolute;
+	width: 90%;
+	max-width: 576px;
+	min-width: 288px;
+	border-radius: 5px;
+	top:20%;
+	margin-left: 5%;
+	line-height: 2;
+	background-color: #ffffff;
+}
+
+.content, .content:before, .content:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.content {
+    min-width: 320px;
+    max-width: 640px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 15px;
+    position: relative;
+}
+
+.input-box-big {
+    position: relative;
+}
+.input-box-big {
+    width: 100%;
+}
+.input-box-big, .input-box-middle {
+    padding: 3px 0 5px;
+    position: relative;
+}
+
+.platform-send label {
+    font-size: 15px;
+    line-height: 26px;
+}
+.platform-send label, input {
+    width: 100%;
+    display: block;
+    padding-left: 14px;
+    padding-right: 14px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.platform-send  input::-webkit-input-placeholder{font-size:16px}
+.platform-send  input:-moz-placeholder{font-size:16px}
+.platform-send  input::-moz-placeholder{font-size:16px}
+.platform-send  input:-ms-input-placeholder{font-size:16px}
+
+.platform-send input {
+    border: 1px solid #d5d5d5;
+    border-radius: 3px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    height: 42px;
+    font-size: 16px;
+}
+
+input.num {
+    background-color: #ffffff;
+    text-align: center;
+}
+
+.subtract {
+    left: 0;
+    border-bottom-left-radius: 3px;
+    border-top-left-radius: 3px;
+}
+.change-num {
+    display: block;
+    position: absolute;
+    background-color: #cacaca;
+    color: #fff;
+    text-align: center;
+    width: 74px;
+    height: 42px;
+    line-height: 34px;
+    bottom: 5px;
+}
+
+span.edit {
+    background-color: #ff0000;
+}
+.add {
+    right: 0;
+    border-bottom-right-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.distinct {
+    background-color: #f0f0f0;
+    border-radius: 3px;
+    position: relative;
+    margin-top: 15px;
+}
+
+.if-hide .icon_control.checked {
+    background-image: url(../img/icon_yes.png);
+}
+.if-hide .icon_control {
+    display: block;
+    float: right;
+    position: relative;
+    width: 55px;
+    height: 24px;
+    background-image: url(../img/icon_no.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 55px 24px;
+}
+.if-hide .icon_control i {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 25px;
+    height: 24px;
+    background-image: url(../img/icon_control.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 25px 24px;
+    z-index: 9;
+    transition: left .1s;
+    -moz-transition: left .1s;
+    -webkit-transition: left .1s;
+    -o-transition: left .1s;
+}
+
+.distinct .val {
+    height: 0;
+    transition: height .2s;
+    overflow: hidden;
+    position: relative;
+}
+
+.distinct input {
+    background-color: #f0f0f0;
+    border: 0 none;
+    height: 48px;
+}
+
+
+.over_all {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.5);
+	z-index: 9999;
+	display: none;
+}
+.load {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+	z-index: 9999;
+	background-color: rgba(0, 0, 0, 0.38);
+	text-align: center;
+}
+.load img{
+	margin-top: 40%;
+	width: 5px;
+	
+}
+.wait_text{
+	color: white;
+	margin-top: 2px;
+}
+
+.ope-title {
+    background: url(../img/operation_t.png) no-repeat center center;
+    background-size: 100%;
+    text-align: center;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    color: #666;
+    font-size: 14px;
+}
+
+.platform-send input[type="button"] {
+    line-height: 0;
+    display: inline-block;
+}
+
+.btn-orange {
+    background-color: #ff8b2e;
+}
+.btn-orange {
+    color: #fff;
+}
+
+.btn-cancel {
+    background-color: #f4f4f4;
+    color: #666;
+    border: 1px solid #d5d5d5;
+}
+
+.btn-middle {
+    width: 49%;
+    text-align: center;
+    line-height: 42px;
+    height: 42px;
+    margin: 20px 0 30px;
+    border-radius: 3px;
+    letter-spacing: 1px;
+    display: block;
+}
+/***************/

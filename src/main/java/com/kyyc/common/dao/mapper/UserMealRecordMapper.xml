@@ -4,7 +4,13 @@
 	<resultMap id="BaseResultMap" type="com.kyyc.common.model.UserMealRecord">
 		<id column="ID" property="id" jdbcType="INTEGER" />
 		<result column="USER_ID" property="userId" jdbcType="VARCHAR" />
-		<result column="COURSE_ID" property="courseId" jdbcType="INTEGER" />
+		<result column="MEAL_ID" property="mealId" jdbcType="INTEGER" />
+		<result column="ORDER_NUM" property="orderNum" jdbcType="INTEGER" />
 		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
 	</resultMap>
+	
+	<!-- 餐饮订购总和  -->
+	<select id="countOrderNum" resultType="Integer">
+		SELECT SUM(order_num) FROM user_meal_record WHERE meal_id = #{mealId}
+	</select>
 </mapper>

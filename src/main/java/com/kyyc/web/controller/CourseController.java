@@ -1,6 +1,5 @@
 package com.kyyc.web.controller;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +8,6 @@ import javax.annotation.Resource;
 
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -49,8 +47,6 @@ public class CourseController {
 	private static final String VIEW_COURSE_CONTENT = "web/course/coursePageContent";
 	private static final String VIEW_TO_COURSE_INFO = "web/course/courseInfo";
 	private static final String VIEW_TO_COURSE_DETAIL = "web/course/courseDetail";
-	private static final String VIEW_TO_ORDER_RECORD = "web/course/orderRecord";
-	private static final String VIEW_TO_ORDER_DETAIL = "web/course/orderDetail";
 
 	@Resource
 	private CourseService courseService;
@@ -76,14 +72,14 @@ public class CourseController {
 			 */
 			if (StringUtils.isEmpty(beginDate)) {
 
-				beginDate = DateTime.now().minusDays(DateTime.now().getDayOfWeek() - 1).toString(Constants.DATETIME_10);
+				beginDate = DateTime.now().toString(Constants.DATETIME_10);
 			}
 
 			/**
 			 * 预约结束时间
 			 */
 			if (StringUtils.isEmpty(endDate)) {
-				endDate = DateTime.now().toString(Constants.DATETIME_10);
+				endDate = DateTime.now().plusDays(7 - DateTime.now().getDayOfWeek()).toString(Constants.DATETIME_10);
 			}
 
 			/**
@@ -107,6 +103,12 @@ public class CourseController {
 				record.setCourseId(_course.getId());
 				int cnt = userCourseRecordService.count(record);
 				_course.setPersonNum(cnt);
+
+				/**
+				 * 重新设置开课时间
+				 */
+				_course.setCourseDate(_course.getCourseDate() + " "
+						+ DateTime.parse(_course.getCourseDate()).dayOfWeek().getAsShortText());
 			}
 
 			PageInfo<Course> page = new PageInfo<Course>(courseList);
@@ -136,14 +138,15 @@ public class CourseController {
 			 * 预约开始时间
 			 */
 			if (StringUtils.isEmpty(beginDate)) {
-				beginDate = DateTime.now().minusDays(DateTime.now().getDayOfWeek() - 1).toString(Constants.DATETIME_10);
+
+				beginDate = DateTime.now().toString(Constants.DATETIME_10);
 			}
 
 			/**
 			 * 预约结束时间
 			 */
 			if (StringUtils.isEmpty(endDate)) {
-				endDate = DateTime.now().toString(Constants.DATETIME_10);
+				endDate = DateTime.now().plusDays(7 - DateTime.now().getDayOfWeek()).toString(Constants.DATETIME_10);
 			}
 
 			/**
@@ -167,6 +170,12 @@ public class CourseController {
 				record.setCourseId(_course.getId());
 				int cnt = userCourseRecordService.count(record);
 				_course.setPersonNum(cnt);
+
+				/**
+				 * 重新设置开课时间
+				 */
+				_course.setCourseDate(_course.getCourseDate() + " "
+						+ DateTime.parse(_course.getCourseDate()).dayOfWeek().getAsShortText());
 			}
 
 			PageInfo<Course> page = new PageInfo<Course>(courseList);
@@ -281,6 +290,12 @@ public class CourseController {
 			Course course = courseService.selectById(id);
 
 			/**
+			 * 重新设置开课时间
+			 */
+			course.setCourseDate(course.getCourseDate() + " "
+					+ DateTime.parse(course.getCourseDate()).dayOfWeek().getAsShortText());
+
+			/**
 			 * 设置当前报考人数
 			 */
 			UserCourseRecord _record = new UserCourseRecord();
@@ -303,126 +318,4 @@ public class CourseController {
 		}
 		return VIEW_TO_COURSE_DETAIL;
 	}
-
-	/**
-	 * 预约记录
-	 */
-	@RequestMapping("/orderRecord")
-	public String orderRecord(String courseDate, String beginDate, String endDate, Model mode) {
-		try {
-			/**
-			 * 开课时间
-			 */
-			if (StringUtils.isEmpty(courseDate)) {
-				courseDate = DateTime.now().toString(Constants.DATETIME_10);
-			}
-
-			/**
-			 * 预约开始时间
-			 */
-			if (StringUtils.isEmpty(beginDate)) {
-				beginDate = DateTime.now().toString(Constants.DATETIME_10) + " 00:00:00";
-			}
-
-			/**
-			 * 预约结束时间
-			 */
-			if (StringUtils.isEmpty(endDate)) {
-				endDate = DateTime.now().toString(Constants.DATETIME_10) + " 23:59:59";
-			}
-			/**
-			 * 转换日期
-			 */
-			Date _beginDate = DateTime.parse(beginDate, DateTimeFormat.forPattern(Constants.DATETIME_14_COMMON))
-					.toDate();
-			Date _endDate = DateTime.parse(endDate, DateTimeFormat.forPattern(Constants.DATETIME_14_COMMON)).toDate();
-
-			/**
-			 * 设置查询条件
-			 */
-			Condition condition = new Condition(UserCourseRecord.class);
-			condition.createCriteria().andBetween("createTime", _beginDate, _endDate)
-					.andEqualTo("courseDate", courseDate);
-			/**
-			 * 查询
-			 */
-			List<UserCourseRecord> recordList = userCourseRecordService.selectByCondition(condition);
-
-			/**
-			 * 迭代获取课程信息
-			 */
-			for (UserCourseRecord _record : recordList) {
-
-				Course course = courseService.selectById(_record.getCourseId());
-
-				/**
-				 * 设置当前报考人数
-				 */
-				UserCourseRecord rcd = new UserCourseRecord();
-				rcd.setCourseId(course.getId());
-				int cnt = userCourseRecordService.count(rcd);
-				course.setPersonNum(cnt);
-
-				/**
-				 * 设置课程信息
-				 */
-				_record.setCourse(course);
-
-				/**
-				 * 设置用户信息
-				 */
-				UserInfo userInfo = userInfoService.selectById(_record.getUserId());
-				_record.setUserInfo(userInfo);
-			}
-
-			mode.addAttribute("courseRecordList", recordList);
-		} catch (Exception e) {
-			LOG.error("查询预约课程记录出错！", e);
-		}
-		return VIEW_TO_ORDER_RECORD;
-	}
-
-	/**
-	 * 预约课程详情
-	 */
-	@RequestMapping("/orderDetail/{id}")
-	public String orderDetail(@PathVariable int id, Model mode) {
-		try {
-
-			/**
-			 * 获取预约记录
-			 */
-			UserCourseRecord record = userCourseRecordService.selectById(id);
-
-			/**
-			 * 获取课程信息
-			 */
-			Course course = courseService.selectById(record.getCourseId());
-
-			/**
-			 * 设置当前报考人数
-			 */
-			UserCourseRecord _record = new UserCourseRecord();
-			_record.setCourseId(record.getCourseId());
-			int cnt = userCourseRecordService.count(_record);
-			course.setPersonNum(cnt);
-
-			/**
-			 * 设置课程
-			 */
-			record.setCourse(course);
-
-			/**
-			 * 设置用户信息
-			 */
-			UserInfo userInfo = userInfoService.selectById(_record.getUserId());
-			_record.setUserInfo(userInfo);
-
-			mode.addAttribute("userCourseRecord", record);
-		} catch (Exception e) {
-			LOG.error("预约课程详情出错！", e);
-		}
-		return VIEW_TO_ORDER_DETAIL;
-	}
-
 }

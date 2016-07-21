@@ -10,7 +10,7 @@ import javax.persistence.Transient;
 import com.kyyc.core.model.BaseModel;
 
 /**
- * 用户预定课程记录
+ * 用户预定餐食记录
  *
  * @author MaQinZh 2016年7月6日下午4:15:11
  */
@@ -33,9 +33,24 @@ public class UserMealRecord extends BaseModel {
 	private String userId;
 
 	/**
-	 * 课程ID
+	 * 餐食ID
 	 */
 	private Integer mealId;
+
+	/**
+	 * 预定数量
+	 */
+	private Integer orderNum;
+
+	/**
+	 * 是否需要配送（0：否，1：是）
+	 */
+	private String isDelivery;
+
+	/**
+	 * 配送地址
+	 */
+	private String deliveryAddress;
 
 	/**
 	 * 创建时间
@@ -43,7 +58,7 @@ public class UserMealRecord extends BaseModel {
 	private Date createTime;
 
 	/**
-	 * 课程信息
+	 * 餐食信息
 	 */
 	@Transient
 	private Meal meal;
@@ -93,22 +108,79 @@ public class UserMealRecord extends BaseModel {
 	}
 
 	/**
-	 * 获取课程ID
+	 * 获取餐食ID
 	 *
-	 * @return COURSE_ID - 课程ID
+	 * @return MEAL_ID - 餐食ID
 	 */
 	public Integer getMealId() {
 		return mealId;
 	}
 
 	/**
-	 * 设置课程ID
+	 * 设置餐食ID
 	 *
 	 * @param mealId
-	 *            课程ID
+	 *            餐食ID
 	 */
 	public void setMealId(Integer mealId) {
 		this.mealId = mealId;
+	}
+
+	/**
+	 * 获取预定数量
+	 * 
+	 * @return ORDER_NUM 预定数量
+	 */
+	public Integer getOrderNum() {
+		return this.orderNum;
+	}
+
+	/**
+	 * 设置预定数量
+	 * 
+	 * @param orderNum
+	 *            预定数量
+	 */
+	public void setOrderNum(Integer orderNum) {
+		this.orderNum = orderNum;
+	}
+
+	/**
+	 * 获取是否需要配送（0：否，1：是）
+	 *
+	 * @return IS_STANDBY - 是否需要配送（0：否，1：是）
+	 */
+	public String getIsDelivery() {
+		return isDelivery;
+	}
+
+	/**
+	 * 设置是否需要配送（0：否，1：是）
+	 *
+	 * @param isDelivery
+	 *            是否需要配送（0：否，1：是）
+	 */
+	public void setIsDelivery(String isDelivery) {
+		this.isDelivery = isDelivery;
+	}
+
+	/**
+	 * 获取配送地址
+	 *
+	 * @return DELIVERY_ADDRESS - 配送地址
+	 */
+	public String getDeliveryAddress() {
+		return deliveryAddress;
+	}
+
+	/**
+	 * 设置配送地址
+	 *
+	 * @param deliveryAddress
+	 *            配送地址
+	 */
+	public void setDeliveryAddress(String deliveryAddress) {
+		this.deliveryAddress = deliveryAddress;
 	}
 
 	/**
