@@ -97,7 +97,7 @@ public class UserInfoController {
 			userInfoService.transferFromWexin();
 			resMap.put("success", true);
 		} catch (Exception e) {
-			LOG.error("查询询价顾问列表的时候发生错误：", e);
+			LOG.error("从微信端更新关注用户列表的时候发生错误：", e);
 			resMap.put("success", false);
 		}
 		return resMap;
