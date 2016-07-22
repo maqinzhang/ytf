@@ -26,7 +26,7 @@
 <script type="text/javascript" src="resources/js/lib/zepto/touch.js"></script>
 
 <script type="text/javascript" src="resources/js/common/date.js"></script>
-
+<script type="text/javascript" src="resources/js/common/WeChat.js"></script>
 </head>
 <body>
 	<div class="hotbody reserve_group_2">
