@@ -44,7 +44,7 @@
 			</article>
 			<div style="padding-left: 10px; padding-right: 10px;">
 				<a id="recordBtn" class="btn-big btn-red">查看预约餐食</a>
-				<a id="mealBtn" class="btn-big btn-gray">返回餐食列表</a>
+				<a id="mealBtn" style=" margin-top: 15px;" class="btn-big btn-gray">返回餐食列表</a>
 			</div>
 		</div>
 	</div>

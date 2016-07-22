@@ -44,7 +44,7 @@
 			</article>
 			<div style="padding-left: 10px; padding-right: 10px;">
 				<a id="recordBtn" class="btn-big btn-red">查看预约课程</a>
-				<a id="courseBtn" class="btn-big btn-gray">返回课程列表</a>
+				<a id="courseBtn" style=" margin-top: 15px;" class="btn-big btn-gray">返回课程列表</a>
 			</div>
 		</div>
 	</div>

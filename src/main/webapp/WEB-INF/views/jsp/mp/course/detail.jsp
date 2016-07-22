@@ -61,7 +61,7 @@
 			</div>
 			<div style="padding-left: 10px; padding-right: 10px;">
 				<a id="addBtn" class="btn-big btn-red">预约课程</a>
-				<a id="backBtn" class="btn-big btn-gray">返回</a>
+				<a id="backBtn" style=" margin-top: 15px;" class="btn-big btn-gray">返回</a>
 			</div>
 		</div>
 	</div>
