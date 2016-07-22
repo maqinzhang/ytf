@@ -25,6 +25,7 @@
 <script type="text/javascript" src="resources/js/lib/zepto/touch.js"></script>
 
 <script type="text/javascript" src="resources/js/common/Toast.js"></script>
+<script type="text/javascript" src="resources/js/common/WeChat.js"></script>
 </head>
 <body>
 	<div class="hotbody arena_info">
@@ -84,7 +85,7 @@
 		   	<input class="btn-middle btn-red sure" value="确认" type="button">
 		   	<input class="btn-middle btn-cancel cancel" value="取消" type="button">
 		</div>
-	</div>	
+	</div>
 	<script type="text/javascript">
 	
 		$("#orderNum").val($("#orderNum").attr("data-minNum"));
