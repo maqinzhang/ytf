@@ -45,7 +45,6 @@ public class UserInfoController {
 			@RequestParam(value = "pageSize", defaultValue = Constants.DEFAULT_PAGE_SIZE) int pageSize, Model model) {
 		try {
 			PageHelper.startPage(pageNo, pageSize);
-			PageHelper.orderBy("USER_ID ASC");
 			List<UserInfo> userInfoList = userInfoService.select(null);
 			PageInfo<UserInfo> page = new PageInfo<UserInfo>(userInfoList);
 
@@ -74,7 +73,6 @@ public class UserInfoController {
 				criteria.andLike("nickName", "%" + userInfo.getNickName() + "%");
 			}
 			PageHelper.startPage(pageNo, pageSize);
-			PageHelper.orderBy("USER_ID ASC");
 			List<UserInfo> userInfoList = userInfoService.selectByCondition(condition);
 			PageInfo<UserInfo> page = new PageInfo<UserInfo>(userInfoList);
 
