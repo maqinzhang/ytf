@@ -63,7 +63,7 @@
 				<label class="control-label">开课时间：</label>
 				<div class="controls">
 					<input type="text" class="input input-normal Wdate" id="beginTime" name="beginTime" onFocus="WdatePicker({dateFmt:'HH:mm'})" value="${course.beginTime }">  - 
-					<input type="text" class="input input-normal Wdate" id="endTime" name="endTime" onFocus="WdatePicker({dateFmt:'HH:mm', minDate:'#beginTime'})" value="${course.endTime }"> 
+					<input type="text" class="input input-normal Wdate" id="endTime" name="endTime" onFocus="WdatePicker({dateFmt:'HH:mm', minDate:'#F{$dp.$D(\'beginTime\')}'})" value="${course.endTime }"> 
 					<span style="color: red;">* </span><a style="color: #999999; text-decoration: none;"></a>
 				</div>
 			</div>

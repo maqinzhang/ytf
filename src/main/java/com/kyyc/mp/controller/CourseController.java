@@ -17,6 +17,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.github.pagehelper.PageHelper;
 import com.kyyc.common.model.Course;
 import com.kyyc.common.model.UserCourseRecord;
 import com.kyyc.common.model.UserInfo;
@@ -109,6 +110,7 @@ public class CourseController {
 			 */
 			Course course = new Course();
 			course.setCourseDate(courseDate);
+			PageHelper.orderBy("BEGIN_TIME ASC, END_TIME ASC");
 			List<Course> courseList = courseService.select(course);
 
 			/**
@@ -157,6 +159,7 @@ public class CourseController {
 			 */
 			Course course = new Course();
 			course.setCourseDate(courseDate);
+			PageHelper.orderBy("BEGIN_TIME ASC, END_TIME ASC");
 			List<Course> courseList = courseService.select(course);
 
 			/**
