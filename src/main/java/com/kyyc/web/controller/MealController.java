@@ -2,6 +2,7 @@ package com.kyyc.web.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -104,7 +105,7 @@ public class MealController {
 				 * 重新设置订餐时间
 				 */
 				_meal.setMealDate(_meal.getMealDate() + " "
-						+ DateTime.parse(_meal.getMealDate()).dayOfWeek().getAsShortText());
+						+ DateTime.parse(_meal.getMealDate()).dayOfWeek().getAsShortText(Locale.CHINESE));
 			}
 
 			PageInfo<Meal> page = new PageInfo<Meal>(mealList);
@@ -171,7 +172,7 @@ public class MealController {
 				 * 重新设置订餐时间
 				 */
 				_meal.setMealDate(_meal.getMealDate() + " "
-						+ DateTime.parse(_meal.getMealDate()).dayOfWeek().getAsShortText());
+						+ DateTime.parse(_meal.getMealDate()).dayOfWeek().getAsShortText(Locale.CHINESE));
 			}
 
 			PageInfo<Meal> page = new PageInfo<Meal>(mealList);
@@ -282,7 +283,7 @@ public class MealController {
 			/**
 			 * 重新设置订餐时间
 			 */
-			meal.setMealDate(meal.getMealDate() + " " + DateTime.parse(meal.getMealDate()).dayOfWeek().getAsShortText());
+			meal.setMealDate(meal.getMealDate() + " " + DateTime.parse(meal.getMealDate()).dayOfWeek().getAsShortText(Locale.CHINESE));
 
 			/**
 			 * 设置当前预定人数

@@ -30,8 +30,8 @@
 				<div class="controls">
 					<select id="type" name="type" class="input input-select">
 						<option value="">--请选择--</option>
-						<option value="1">食品类</option>
-						<option value="2">饮品类</option>
+						<option value="1" <c:if test="${meal.type eq '1' }"> selected</c:if>>食品类</option>
+						<option value="2"<c:if test="${meal.type eq '2' }"> selected</c:if>>饮品类</option>
 					</select>
 					<span style="color: red;">* </span><a style="color: #999999; text-decoration: none;"></a>
 				</div>

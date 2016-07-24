@@ -46,9 +46,9 @@
 				</div>
 			</div>
 			<div class="row mt10">
-				<label class="control-label">餐食人数：</label>
+				<label class="control-label">餐食数量：</label>
 				<div class="controls">
-					<font color="red">${meal.orderNum }人预约</font>  / <font color="blue">限制${meal.orderLimit }人</font>
+					<font color="red">${meal.orderNum }份预约</font>  / <font color="blue">限制${meal.orderLimit }份</font>
 				</div>
 			</div>
 			<div class="row mt10">

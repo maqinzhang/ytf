@@ -17,7 +17,7 @@
 							</c:choose>
 						</span>
 						<strong> 
-							人数：<em>${meal.orderNum }</em>/${meal.orderLimit }
+							数量：<em>${meal.orderNum }</em>/${meal.orderLimit }
 						</strong>
 					</h5>
 				</section>

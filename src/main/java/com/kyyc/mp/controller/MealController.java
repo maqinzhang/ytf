@@ -3,6 +3,7 @@ package com.kyyc.mp.controller;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -14,14 +15,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kyyc.common.model.Meal;
+import com.kyyc.common.model.UserInfo;
 import com.kyyc.common.model.UserMealRecord;
 import com.kyyc.common.model.WeChatConstants;
 import com.kyyc.common.service.MealService;
+import com.kyyc.common.service.UserInfoService;
 import com.kyyc.common.service.UserMealRecordService;
 import com.kyyc.core.model.Constants;
 import com.kyyc.mp.service.WeChatMpService;
@@ -43,7 +47,10 @@ public class MealController {
 	private static final String VIEW_TO_RESULT = "mp/meal/result";
 	private static final String VIEW_TO_ORDER_RECORD = "mp/meal/orderRecord";
 	private static final String VIEW_TO_ORDER_DETAIL = "mp/meal/orderDetail";
+	private static final String VIEW_TO_TIPS = "mp/common/tips";
 
+	@Resource
+	private UserInfoService userInfoService;
 	@Resource
 	private MealService mealService;
 	@Resource
@@ -55,7 +62,7 @@ public class MealController {
 	 * 餐食列表
 	 */
 	@RequestMapping("/list")
-	public String list(String mealDate, HttpServletRequest request, HttpServletResponse response, Model mode) {
+	public String list(String mealDate, HttpServletRequest request, HttpServletResponse response, Model model) {
 
 		try {
 			/**
@@ -67,6 +74,16 @@ public class MealController {
 			 */
 			if (StringUtils.isEmpty(openId)) {
 				return null;
+			}
+
+			/**
+			 * 判断是否会员
+			 */
+			UserInfo userInfo = userInfoService.selectById(openId);
+			if (StringUtils.isEmpty(userInfo.getCardNo())) {
+				model.addAttribute("success", false);
+				model.addAttribute("msg", "很抱歉，YTF会员服务系统仅向会员开放使用！");
+				return VIEW_TO_TIPS;
 			}
 
 			/**
@@ -77,19 +94,19 @@ public class MealController {
 			if (StringUtils.isEmpty(mealDate)) {
 				mealDate = DateTime.now().toString(Constants.DATETIME_10);
 			}
-			dateList.add(mealDate + " " + DateTime.parse(mealDate).dayOfWeek().getAsShortText());
+			dateList.add(mealDate + " " + DateTime.parse(mealDate).dayOfWeek().getAsShortText(Locale.CHINESE));
 
 			/**
 			 * 当前查询后一天
 			 */
 			dateList.add(DateTime.parse(mealDate).plusDays(1).toString(Constants.DATETIME_10) + " "
-					+ DateTime.parse(mealDate).plusDays(1).dayOfWeek().getAsShortText());
+					+ DateTime.parse(mealDate).plusDays(1).dayOfWeek().getAsShortText(Locale.CHINESE));
 
 			/**
 			 * 当前查询后二天
 			 */
 			dateList.add(DateTime.parse(mealDate).plusDays(2).toString(Constants.DATETIME_10) + " "
-					+ DateTime.parse(mealDate).plusDays(2).dayOfWeek().getAsShortText());
+					+ DateTime.parse(mealDate).plusDays(2).dayOfWeek().getAsShortText(Locale.CHINESE));
 
 			/**
 			 * 查询餐食列表
@@ -102,12 +119,15 @@ public class MealController {
 			 * 迭代餐食， 设置当前预定份数
 			 */
 			for (Meal _meal : mealList) {
-				int cnt = userMealRecordService.countOrderNum(_meal.getId());
+				Integer cnt = userMealRecordService.countOrderNum(_meal.getId());
+				if (ObjectUtils.isEmpty(cnt)) {
+					cnt = 0;
+				}
 				_meal.setOrderNum(cnt);
 			}
 
-			mode.addAttribute("dateList", dateList);
-			mode.addAttribute("mealList", mealList);
+			model.addAttribute("dateList", dateList);
+			model.addAttribute("mealList", mealList);
 		} catch (Exception e) {
 			LOG.error("查询餐食列表出错！", e);
 		}
@@ -118,7 +138,7 @@ public class MealController {
 	 * 餐食列表内容
 	 */
 	@RequestMapping("/listContent")
-	public String listContent(String mealDate, HttpServletRequest request, HttpServletResponse response, Model mode) {
+	public String listContent(String mealDate, HttpServletRequest request, HttpServletResponse response, Model model) {
 
 		try {
 			/**
@@ -148,11 +168,14 @@ public class MealController {
 			 * 迭代餐食， 设置当前预定份数
 			 */
 			for (Meal _meal : mealList) {
-				int cnt = userMealRecordService.countOrderNum(_meal.getId());
+				Integer cnt = userMealRecordService.countOrderNum(_meal.getId());
+				if (ObjectUtils.isEmpty(cnt)) {
+					cnt = 0;
+				}
 				_meal.setOrderNum(cnt);
 			}
 
-			mode.addAttribute("mealList", mealList);
+			model.addAttribute("mealList", mealList);
 		} catch (Exception e) {
 			LOG.error("查询餐食列表内容出错！", e);
 		}
@@ -163,17 +186,20 @@ public class MealController {
 	 * 餐食详情
 	 */
 	@RequestMapping("/detail/{id}")
-	public String detail(@PathVariable int id, Model mode) {
+	public String detail(@PathVariable int id, Model model) {
 		try {
 			Meal meal = mealService.selectById(id);
 
 			/**
 			 * 设置当前预定份数
 			 */
-			int cnt = userMealRecordService.countOrderNum(id);
+			Integer cnt = userMealRecordService.countOrderNum(id);
+			if (ObjectUtils.isEmpty(cnt)) {
+				cnt = 0;
+			}
 			meal.setOrderNum(cnt);
 
-			mode.addAttribute("meal", meal);
+			model.addAttribute("meal", meal);
 		} catch (Exception e) {
 			LOG.error("查询餐食详情出错！", e);
 		}
@@ -204,8 +230,10 @@ public class MealController {
 			 */
 			Meal meal = mealService.selectById(userMealRecord.getMealId());
 
-			int cnt = userMealRecordService.countOrderNum(userMealRecord.getMealId());
-
+			Integer cnt = userMealRecordService.countOrderNum(userMealRecord.getMealId());
+			if (ObjectUtils.isEmpty(cnt)) {
+				cnt = 0;
+			}
 			/**
 			 * 判断当前预约是否已经满额
 			 */
@@ -245,7 +273,7 @@ public class MealController {
 	 * 预约餐食详情
 	 */
 	@RequestMapping("/orderDetail/{id}")
-	public String orderDetail(@PathVariable int id, Model mode) {
+	public String orderDetail(@PathVariable int id, Model model) {
 		try {
 
 			/**
@@ -261,7 +289,10 @@ public class MealController {
 			/**
 			 * 设置当前预定份数
 			 */
-			int cnt = userMealRecordService.countOrderNum(record.getMealId());
+			Integer cnt = userMealRecordService.countOrderNum(record.getMealId());
+			if (ObjectUtils.isEmpty(cnt)) {
+				cnt = 0;
+			}
 			meal.setOrderNum(cnt);
 
 			/**
@@ -269,7 +300,7 @@ public class MealController {
 			 */
 			record.setMeal(meal);
 
-			mode.addAttribute("userMealRecord", record);
+			model.addAttribute("userMealRecord", record);
 		} catch (Exception e) {
 			LOG.error("预约餐食详情出错！", e);
 		}
@@ -335,7 +366,7 @@ public class MealController {
 	 * 预约记录1
 	 */
 	@RequestMapping("/orderRecord")
-	public String orderRecord(HttpServletRequest request, HttpServletResponse response, Model mode) {
+	public String orderRecord(HttpServletRequest request, HttpServletResponse response, Model model) {
 		try {
 			/**
 			 * 获取公众号用户惟一标识
@@ -346,6 +377,16 @@ public class MealController {
 			 */
 			if (StringUtils.isEmpty(openId)) {
 				return null;
+			}
+			
+			/**
+			 * 判断是否会员
+			 */
+			UserInfo userInfo = userInfoService.selectById(openId);
+			if (StringUtils.isEmpty(userInfo.getCardNo())) {
+				model.addAttribute("success", false);
+				model.addAttribute("msg", "很抱歉，YTF会员服务系统仅向会员开放使用！");
+				return VIEW_TO_TIPS;
 			}
 
 			/**
@@ -363,12 +404,15 @@ public class MealController {
 				/**
 				 * 设置当前预定份数
 				 */
-				int cnt = userMealRecordService.countOrderNum(meal.getId());
+				Integer cnt = userMealRecordService.countOrderNum(meal.getId());
+				if (ObjectUtils.isEmpty(cnt)) {
+					cnt = 0;
+				}
 				meal.setOrderNum(cnt);
 				_record.setMeal(meal);
 			}
 
-			mode.addAttribute("mealRecordList", recordList);
+			model.addAttribute("mealRecordList", recordList);
 		} catch (Exception e) {
 			LOG.error("查询餐食详情出错！", e);
 		}

@@ -63,6 +63,7 @@
 			</div>
 		</div>
 	</div>
+	
 	<div id="platform" class="over_all" style="display: hidden;">
 		<div class="content platform-send clearfix">
 		  	<div class="ope-title">预约餐饮</div>
@@ -82,8 +83,8 @@
 				      </div>
 			    </div>
 		   	</form>
-		   	<input class="btn-middle btn-red sure" value="确认" type="button">
-		   	<input class="btn-middle btn-cancel cancel" value="取消" type="button">
+		   	<input class="btn-middle btn-red sure" style=" height: 60px;" value="确认" type="button">
+		   	<input class="btn-middle btn-cancel cancel" style=" height: 60px;" value="取消" type="button">
 		</div>
 	</div>
 	<script type="text/javascript">

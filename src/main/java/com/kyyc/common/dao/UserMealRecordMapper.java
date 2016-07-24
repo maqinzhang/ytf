@@ -18,5 +18,5 @@ public interface UserMealRecordMapper extends BaseMapper<UserMealRecord> {
 	 *            餐饮ID
 	 * @return
 	 */
-	public int countOrderNum(int mealId);
+	public Integer countOrderNum(int mealId);
 }

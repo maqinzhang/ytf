@@ -39,7 +39,7 @@
 						<td>${meal.name }</td>
 						<td>${meal.mealDate }</td>
 						<td>
-							<font color="blue">${meal.orderNum }人预定</font> / <font color="red">限制${meal.orderLimit }人</font>
+							<font color="blue">${meal.orderNum }份预定</font> / <font color="red">限制${meal.orderLimit }份</font>
 						</td>
 						<td>
 							<a href="javascript:editMeal('${meal.id}')">编辑</a>

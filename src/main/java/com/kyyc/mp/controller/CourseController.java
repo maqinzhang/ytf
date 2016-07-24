@@ -2,6 +2,7 @@ package com.kyyc.mp.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -18,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.kyyc.common.model.Course;
 import com.kyyc.common.model.UserCourseRecord;
+import com.kyyc.common.model.UserInfo;
 import com.kyyc.common.service.CourseService;
 import com.kyyc.common.service.UserCourseRecordService;
+import com.kyyc.common.service.UserInfoService;
 import com.kyyc.core.model.Constants;
 import com.kyyc.mp.service.WeChatMpService;
 
@@ -40,7 +43,10 @@ public class CourseController {
 	private static final String VIEW_TO_RESULT = "mp/course/result";
 	private static final String VIEW_TO_ORDER_RECORD = "mp/course/orderRecord";
 	private static final String VIEW_TO_ORDER_DETAIL = "mp/course/orderDetail";
+	private static final String VIEW_TO_TIPS = "mp/common/tips";
 
+	@Resource
+	private UserInfoService userInfoService;
 	@Resource
 	private CourseService courseService;
 	@Resource
@@ -52,7 +58,7 @@ public class CourseController {
 	 * 课程列表
 	 */
 	@RequestMapping("/list")
-	public String list(String courseDate, HttpServletRequest request, HttpServletResponse response, Model mode) {
+	public String list(String courseDate, HttpServletRequest request, HttpServletResponse response, Model model) {
 
 		try {
 			/**
@@ -67,6 +73,16 @@ public class CourseController {
 			}
 
 			/**
+			 * 判断是否会员
+			 */
+			UserInfo userInfo = userInfoService.selectById(openId);
+			if (StringUtils.isEmpty(userInfo.getCardNo())) {
+				model.addAttribute("success", false);
+				model.addAttribute("msg", "很抱歉，YTF会员服务系统仅向会员开放使用！");
+				return VIEW_TO_TIPS;
+			}
+
+			/**
 			 * 时间选择列表
 			 */
 			List<String> dateList = new ArrayList<String>();
@@ -74,19 +90,19 @@ public class CourseController {
 			if (StringUtils.isEmpty(courseDate)) {
 				courseDate = DateTime.now().toString(Constants.DATETIME_10);
 			}
-			dateList.add(courseDate + " " + DateTime.parse(courseDate).dayOfWeek().getAsShortText());
+			dateList.add(courseDate + " " + DateTime.parse(courseDate).dayOfWeek().getAsShortText(Locale.CHINESE));
 
 			/**
 			 * 当前查询后一天
 			 */
 			dateList.add(DateTime.parse(courseDate).plusDays(1).toString(Constants.DATETIME_10) + " "
-					+ DateTime.parse(courseDate).plusDays(1).dayOfWeek().getAsShortText());
+					+ DateTime.parse(courseDate).plusDays(1).dayOfWeek().getAsShortText(Locale.CHINESE));
 
 			/**
 			 * 当前查询后二天
 			 */
 			dateList.add(DateTime.parse(courseDate).plusDays(2).toString(Constants.DATETIME_10) + " "
-					+ DateTime.parse(courseDate).plusDays(2).dayOfWeek().getAsShortText());
+					+ DateTime.parse(courseDate).plusDays(2).dayOfWeek().getAsShortText(Locale.CHINESE));
 
 			/**
 			 * 查询课程列表
@@ -105,8 +121,8 @@ public class CourseController {
 				_course.setPersonNum(cnt);
 			}
 
-			mode.addAttribute("dateList", dateList);
-			mode.addAttribute("courseList", courseList);
+			model.addAttribute("dateList", dateList);
+			model.addAttribute("courseList", courseList);
 		} catch (Exception e) {
 			LOG.error("查询课程列表出错！", e);
 		}
@@ -117,7 +133,7 @@ public class CourseController {
 	 * 课程列表内容
 	 */
 	@RequestMapping("/listContent")
-	public String listContent(String courseDate, HttpServletRequest request, HttpServletResponse response, Model mode) {
+	public String listContent(String courseDate, HttpServletRequest request, HttpServletResponse response, Model model) {
 
 		try {
 			/**
@@ -156,10 +172,10 @@ public class CourseController {
 				 * 重新设置开课时间
 				 */
 				_course.setCourseDate(_course.getCourseDate() + " "
-						+ DateTime.parse(_course.getCourseDate()).dayOfWeek().getAsShortText());
+						+ DateTime.parse(_course.getCourseDate()).dayOfWeek().getAsShortText(Locale.CHINESE));
 			}
 
-			mode.addAttribute("courseList", courseList);
+			model.addAttribute("courseList", courseList);
 		} catch (Exception e) {
 			LOG.error("查询课程列表内容出错！", e);
 		}
@@ -170,7 +186,7 @@ public class CourseController {
 	 * 课程详情
 	 */
 	@RequestMapping("/detail/{id}")
-	public String detail(@PathVariable int id, Model mode) {
+	public String detail(@PathVariable int id, Model model) {
 		try {
 			Course course = courseService.selectById(id);
 
@@ -178,7 +194,7 @@ public class CourseController {
 			 * 重新设置开课时间
 			 */
 			course.setCourseDate(course.getCourseDate() + " "
-					+ DateTime.parse(course.getCourseDate()).dayOfWeek().getAsShortText());
+					+ DateTime.parse(course.getCourseDate()).dayOfWeek().getAsShortText(Locale.CHINESE));
 
 			/**
 			 * 设置当前报考人数
@@ -188,7 +204,7 @@ public class CourseController {
 			int cnt = userCourseRecordService.count(record);
 			course.setPersonNum(cnt);
 
-			mode.addAttribute("course", course);
+			model.addAttribute("course", course);
 		} catch (Exception e) {
 			LOG.error("查询课程详情出错！", e);
 		}
@@ -222,7 +238,7 @@ public class CourseController {
 			 * 重新设置开课时间
 			 */
 			course.setCourseDate(course.getCourseDate() + " "
-					+ DateTime.parse(course.getCourseDate()).dayOfWeek().getAsShortText());
+					+ DateTime.parse(course.getCourseDate()).dayOfWeek().getAsShortText(Locale.CHINESE));
 
 			UserCourseRecord record = new UserCourseRecord();
 			record.setCourseId(id);
@@ -285,7 +301,7 @@ public class CourseController {
 	 * 预约课程详情
 	 */
 	@RequestMapping("/orderDetail/{id}")
-	public String orderDetail(@PathVariable int id, Model mode) {
+	public String orderDetail(@PathVariable int id, Model model) {
 		try {
 
 			/**
@@ -302,7 +318,7 @@ public class CourseController {
 			 * 重新设置开课时间
 			 */
 			course.setCourseDate(course.getCourseDate() + " "
-					+ DateTime.parse(course.getCourseDate()).dayOfWeek().getAsShortText());
+					+ DateTime.parse(course.getCourseDate()).dayOfWeek().getAsShortText(Locale.CHINESE));
 
 			/**
 			 * 设置当前报考人数
@@ -317,7 +333,7 @@ public class CourseController {
 			 */
 			record.setCourse(course);
 
-			mode.addAttribute("userCourseRecord", record);
+			model.addAttribute("userCourseRecord", record);
 		} catch (Exception e) {
 			LOG.error("预约课程详情出错！", e);
 		}
@@ -362,7 +378,7 @@ public class CourseController {
 	 * 预约记录1
 	 */
 	@RequestMapping("/orderRecord")
-	public String orderRecord(HttpServletRequest request, HttpServletResponse response, Model mode) {
+	public String orderRecord(HttpServletRequest request, HttpServletResponse response, Model model) {
 		try {
 			/**
 			 * 获取公众号用户惟一标识
@@ -373,6 +389,16 @@ public class CourseController {
 			 */
 			if (StringUtils.isEmpty(openId)) {
 				return null;
+			}
+			
+			/**
+			 * 判断是否会员
+			 */
+			UserInfo userInfo = userInfoService.selectById(openId);
+			if (StringUtils.isEmpty(userInfo.getCardNo())) {
+				model.addAttribute("success", false);
+				model.addAttribute("msg", "很抱歉，YTF会员服务系统仅向会员开放使用！");
+				return VIEW_TO_TIPS;
 			}
 
 			/**
@@ -392,7 +418,7 @@ public class CourseController {
 				 * 重新设置开课时间
 				 */
 				course.setCourseDate(course.getCourseDate() + " "
-						+ DateTime.parse(course.getCourseDate()).dayOfWeek().getAsShortText());
+						+ DateTime.parse(course.getCourseDate()).dayOfWeek().getAsShortText(Locale.CHINESE));
 
 				/**
 				 * 设置当前报考人数
@@ -404,7 +430,7 @@ public class CourseController {
 				_record.setCourse(course);
 			}
 
-			mode.addAttribute("courseRecordList", recordList);
+			model.addAttribute("courseRecordList", recordList);
 		} catch (Exception e) {
 			LOG.error("查询课程详情出错！", e);
 		}

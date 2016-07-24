@@ -29,7 +29,7 @@ public class UserMealRecordService extends BaseService<UserMealRecord> {
 	 *            餐饮ID
 	 * @return
 	 */
-	public int countOrderNum(int mealId) {
+	public Integer countOrderNum(int mealId) {
 		return userMealRecordMapper.countOrderNum(mealId);
 	}
 

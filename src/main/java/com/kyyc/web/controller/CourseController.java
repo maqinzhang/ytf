@@ -2,6 +2,7 @@ package com.kyyc.web.controller;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -108,7 +109,7 @@ public class CourseController {
 				 * 重新设置开课时间
 				 */
 				_course.setCourseDate(_course.getCourseDate() + " "
-						+ DateTime.parse(_course.getCourseDate()).dayOfWeek().getAsShortText());
+						+ DateTime.parse(_course.getCourseDate()).dayOfWeek().getAsShortText(Locale.CHINESE));
 			}
 
 			PageInfo<Course> page = new PageInfo<Course>(courseList);
@@ -175,7 +176,7 @@ public class CourseController {
 				 * 重新设置开课时间
 				 */
 				_course.setCourseDate(_course.getCourseDate() + " "
-						+ DateTime.parse(_course.getCourseDate()).dayOfWeek().getAsShortText());
+						+ DateTime.parse(_course.getCourseDate()).dayOfWeek().getAsShortText(Locale.CHINESE));
 			}
 
 			PageInfo<Course> page = new PageInfo<Course>(courseList);
@@ -293,7 +294,7 @@ public class CourseController {
 			 * 重新设置开课时间
 			 */
 			course.setCourseDate(course.getCourseDate() + " "
-					+ DateTime.parse(course.getCourseDate()).dayOfWeek().getAsShortText());
+					+ DateTime.parse(course.getCourseDate()).dayOfWeek().getAsShortText(Locale.CHINESE));
 
 			/**
 			 * 设置当前报考人数
