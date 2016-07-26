@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -77,7 +78,7 @@ public class CourseController {
 			 * 判断是否会员
 			 */
 			UserInfo userInfo = userInfoService.selectById(openId);
-			if (StringUtils.isEmpty(userInfo.getCardNo())) {
+			if (ObjectUtils.isEmpty(userInfo) || StringUtils.isEmpty(userInfo.getCardNo())) {
 				model.addAttribute("success", false);
 				model.addAttribute("msg", "很抱歉，YTF会员服务系统仅向会员开放使用！");
 				return VIEW_TO_TIPS;
@@ -398,7 +399,7 @@ public class CourseController {
 			 * 判断是否会员
 			 */
 			UserInfo userInfo = userInfoService.selectById(openId);
-			if (StringUtils.isEmpty(userInfo.getCardNo())) {
+			if (ObjectUtils.isEmpty(userInfo) || StringUtils.isEmpty(userInfo.getCardNo())) {
 				model.addAttribute("success", false);
 				model.addAttribute("msg", "很抱歉，YTF会员服务系统仅向会员开放使用！");
 				return VIEW_TO_TIPS;

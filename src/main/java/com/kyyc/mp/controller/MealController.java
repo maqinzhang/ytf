@@ -80,7 +80,7 @@ public class MealController {
 			 * 判断是否会员
 			 */
 			UserInfo userInfo = userInfoService.selectById(openId);
-			if (StringUtils.isEmpty(userInfo.getCardNo())) {
+			if (ObjectUtils.isEmpty(userInfo) || StringUtils.isEmpty(userInfo.getCardNo())) {
 				model.addAttribute("success", false);
 				model.addAttribute("msg", "很抱歉，YTF会员服务系统仅向会员开放使用！");
 				return VIEW_TO_TIPS;
@@ -378,12 +378,12 @@ public class MealController {
 			if (StringUtils.isEmpty(openId)) {
 				return null;
 			}
-			
+
 			/**
 			 * 判断是否会员
 			 */
 			UserInfo userInfo = userInfoService.selectById(openId);
-			if (StringUtils.isEmpty(userInfo.getCardNo())) {
+			if (ObjectUtils.isEmpty(userInfo) || StringUtils.isEmpty(userInfo.getCardNo())) {
 				model.addAttribute("success", false);
 				model.addAttribute("msg", "很抱歉，YTF会员服务系统仅向会员开放使用！");
 				return VIEW_TO_TIPS;
