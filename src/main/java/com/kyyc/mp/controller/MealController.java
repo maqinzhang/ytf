@@ -224,6 +224,23 @@ public class MealController {
 			if (StringUtils.isEmpty(openId)) {
 				return null;
 			}
+			
+			/**
+			 * 是否预约过
+			 */
+			UserMealRecord _record = new UserMealRecord();
+			_record.setUserId(openId);
+			_record.setMealId(userMealRecord.getMealId());
+			int recordCount = userMealRecordService.count(_record);
+			
+			/**
+			 * 判断是否预约过
+			 */
+			if (recordCount > 0) {
+				model.addAttribute("success", false);
+				model.addAttribute("msg", "该餐食您已经预约过，请选择其他餐食！");
+				return VIEW_TO_RESULT;
+			}
 
 			/**
 			 * 获取当前餐食

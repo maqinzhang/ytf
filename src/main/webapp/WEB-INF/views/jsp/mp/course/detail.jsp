@@ -48,7 +48,14 @@
 					<p>开课时间：${course.beginTime }-${course.endTime }</p>
 					<!-- <p class="callout2">  </p> -->
 					<p>课程教练：${course.coach }</p>
-					<p>剩余名额：<font color="red">${course.personLimit - course.personNum }</font></p>
+					<p>剩余名额：
+						<c:choose>
+							<c:when test="${course.personNum gt course.personLimit }">
+								<font color="red">名额已满、${course.personNum - course.personLimit }人排队</font>
+							</c:when>
+							<c:otherwise><font color="red">${course.personLimit - course.personNum }人</font> </c:otherwise>
+						</c:choose>
+					</p>
 					<input type="hidden" id="personRemainder" value="${course.personLimit - course.personNum }"/>
 				</article>
 				<article class="glo_info_model">

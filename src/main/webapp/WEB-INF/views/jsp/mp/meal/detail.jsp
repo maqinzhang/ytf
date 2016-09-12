@@ -51,7 +51,7 @@
 				</article>
 				<article class="glo_info_model">
 					<header>
-						<h3>课程介绍</h3>
+						<h3>餐食介绍</h3>
 					</header>
 					<p id="content">${meal.content }</p>
 				</article>
@@ -66,7 +66,7 @@
 	
 	<div id="platform" class="over_all" style="display: hidden;">
 		<div class="content platform-send clearfix">
-		  	<div class="ope-title">预约餐饮</div>
+		  	<div class="ope-title">预约餐食</div>
 		   	<form id="orderForm" action="meal/order" method="post">
 		   		<input type="hidden" name="mealId" value="${meal.id }">
 		   		<div class="input-box-big">

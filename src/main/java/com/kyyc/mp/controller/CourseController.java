@@ -221,6 +221,8 @@ public class CourseController {
 	@RequestMapping("/order/{id}")
 	public String order(@PathVariable int id, HttpServletRequest request, HttpServletResponse response, Model model) {
 		try {
+			
+			String msg = "课程预约成功！";
 
 			/**
 			 * 获取公众号用户惟一标识
@@ -256,6 +258,8 @@ public class CourseController {
 				// model.addAttribute("msg", "该课程已经达到预约人数，请选择其他课程！");
 				// return VIEW_TO_RESULT;
 				record.setIsStandby("1");
+				
+				msg = "候补排队成功！";
 			} else {
 				record.setIsStandby("0");
 			}
@@ -292,7 +296,7 @@ public class CourseController {
 			userCourseRecordService.save(record);
 
 			model.addAttribute("success", true);
-			model.addAttribute("msg", "课程预约成功！");
+			model.addAttribute("msg", msg);
 		} catch (Exception e) {
 			LOG.error("预约课程出错！", e);
 			model.addAttribute("success", false);

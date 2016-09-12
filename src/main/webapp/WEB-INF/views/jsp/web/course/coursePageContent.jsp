@@ -41,7 +41,7 @@
 						<td>
 							<c:choose>
 								<c:when test="${course.personNum gt course.personLimit }">
-									<font color="red">${course.personLimit }人预约、${course.personNum - course.personLimit }人排队</font>
+									<font color="blue">${course.personLimit }人预约、${course.personNum - course.personLimit }人排队</font>
 								</c:when>
 								<c:otherwise><font color="blue">${course.personNum }人预约</font> </c:otherwise>
 							</c:choose>
