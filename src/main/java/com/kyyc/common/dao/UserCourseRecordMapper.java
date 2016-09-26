@@ -16,4 +16,9 @@ public interface UserCourseRecordMapper extends BaseMapper<UserCourseRecord> {
 	 * 判断基础课程预约数量
 	 */
 	public int countBaseCourse(@Param("userId") String userId, @Param("code") String code);
+
+	/**
+	 * 判断WOD课程预约数量
+	 */
+	public int countWODCourse(@Param("userId") String userId, @Param("name") String name);
 }

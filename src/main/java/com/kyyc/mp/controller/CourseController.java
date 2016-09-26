@@ -239,6 +239,18 @@ public class CourseController {
 			 * 获取当前课程
 			 */
 			Course course = courseService.selectById(id);
+			
+			/**
+			 * 如果是WOD课程，判断该会员今天是否预约过该课程
+			 */
+			if("WOD".equalsIgnoreCase(course.getName().trim())){
+				int cnt = userCourseRecordService.countWODCourse(openId, "WOD");
+				if(cnt > 0){
+					model.addAttribute("success", false);
+					model.addAttribute("msg", "您已预约本日WOD课程，请勿重复预约！");
+					return VIEW_TO_RESULT;
+				}
+			}
 
 			/**
 			 * 重新设置开课时间
