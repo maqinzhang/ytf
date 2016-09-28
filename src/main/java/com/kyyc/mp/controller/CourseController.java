@@ -221,7 +221,7 @@ public class CourseController {
 	@RequestMapping("/order/{id}")
 	public String order(@PathVariable int id, HttpServletRequest request, HttpServletResponse response, Model model) {
 		try {
-
+			
 			String msg = "课程预约成功！";
 
 			/**
@@ -241,18 +241,6 @@ public class CourseController {
 			Course course = courseService.selectById(id);
 
 			/**
-			 * 如果是WOD课程，判断该会员今天是否预约过该课程
-			 */
-			if ("WOD".equalsIgnoreCase(course.getName().trim())) {
-				int cnt = userCourseRecordService.countWODCourse(openId, "WOD", course.getCourseDate());
-				if (cnt > 0) {
-					model.addAttribute("success", false);
-					model.addAttribute("msg", "您已预约本日WOD课程，请勿重复预约！");
-					return VIEW_TO_RESULT;
-				}
-			}
-
-			/**
 			 * 重新设置开课时间
 			 */
 			course.setCourseDate(course.getCourseDate() + " "
@@ -270,7 +258,7 @@ public class CourseController {
 				// model.addAttribute("msg", "该课程已经达到预约人数，请选择其他课程！");
 				// return VIEW_TO_RESULT;
 				record.setIsStandby("1");
-
+				
 				msg = "候补排队成功！";
 			} else {
 				record.setIsStandby("0");
@@ -410,7 +398,7 @@ public class CourseController {
 			if (StringUtils.isEmpty(openId)) {
 				return null;
 			}
-
+			
 			/**
 			 * 判断是否会员
 			 */

@@ -37,13 +37,6 @@ public class UserCourseRecordService extends BaseService<UserCourseRecord> {
 	}
 
 	/**
-	 * 判断WOD课程预约数量
-	 */
-	public int countWODCourse(String userId, String name, String courseDate) {
-		return userCourseRecordMapper.countWODCourse(userId, name, courseDate);
-	}
-
-	/**
 	 * 取消预约记录、将排队的置为预约成功、推送预约成功信息
 	 */
 	public void deleteRecord(int id) {
